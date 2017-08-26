@@ -7,91 +7,116 @@
 	<meta name="viewport" content="width=device-width,initial-scale=1">
 </head>
 <body>
-	<div id="container">
+	<div id="content">
 		<div id="header">
-			
+			<h1>Physiotherapy Examination</h1>
 		</div>
 		<div id="main">
 			<section id="details">
 				<h2>Personal Details</h2>
 				<form>
-					<label for="date">Date:</label>
-					<input type="date" name="date" id="date" class="required"><br>
-					<select>
-						<option value="mr">Mr</option>
-						<option value="mrs">Mrs</option>
-						<option value="miss">Miss</option>
-						<option value="ms">Ms</option>
-					</select>
-					<label for="firstname">First Name:</label>
-					<input type="text" name="firstname" id="firstname">
-					<label for="lastname">Last Name:</label>
-					<input type="text" name="lastname" id="lastname"><br>
-					<label for="dob">Date of Birth:</label>
-					<input type="date" name="dob" id="dob">
-					<label>Age:</label>
-					<input type="text" name="age"><br>
-					<label for="mobile">Mobile #:</label>
-					<input type="number" name="numbers" id="mobile">
-					<label for="home-phone">Home #:</label>
-					<input type="number" name="numbers" id="home-phone">
-					<label for="work-phone">Work #:</label>
-					<input type="number" name="numbers" id="work-phone"><br>
-					<label for="occupation">Occupation:</label>
-					<input type="text" name="occupation" id="occupation">
+					<div>
+						<label for="date">Date:</label>
+						<input type="date" name="date" id="date" class="required">
+					</div>
+					<div>
+						<label>Title:</label>
+						<select>
+							<option value="mr">Mr</option>
+							<option value="mrs">Mrs</option>
+							<option value="miss">Miss</option>
+							<option value="ms">Ms</option>
+						</select>
+					</div>
+					<div>
+						<label for="firstname">First Name:</label>
+						<input type="text" name="firstname" id="firstname">
+					</div>
+					<div>
+						<label for="lastname">Last Name:</label>
+						<input type="text" name="lastname" id="lastname">
+					</div>
+					<div>
+						<label for="dob">Date of Birth:</label>
+						<input type="date" name="dob" id="dob">
+					</div>
+					<div>
+						<label>Age:</label>
+						<input type="text" name="age">
+					</div>
+					<div>
+						<label for="mobile">Mobile #:</label>
+						<input type="number" name="numbers" id="mobile">
+					</div>
+					<div>
+						<label for="home-phone">Home #:</label>
+						<input type="number" name="numbers" id="home-phone">
+					</div>
+					<div>
+						<label for="work-phone">Work #:</label>
+						<input type="number" name="numbers" id="work-phone">
+					</div>
+					<div>
+						<label for="occupation">Occupation:</label>
+						<input type="text" name="occupation" id="occupation">
+					</div>
 				</form>
 			</section>
 			<section id="subjective">
 				<h2>Subjective Examination</h2>
 				<div id="body-chart">
 					<h4>Body Chart</h4>
-					<img src="" alt="body-chart-image.jpg">
+					<img src="http://static1.squarespace.com/static/52994853e4b0a6ba0e3606bc/52994bbfe4b0e9ec09bdee16/529db1aae4b0bffcafd277ff/1443546538035/body+chart+copy.gif?format=1000w" alt="body-chart-image.jpg">
 				</div>
-				<div id="vas">
+				<div id="vas" style="display: block">
 					<h4>Pain Presentation</h4>
-					<p>What is your pain on a scale of 1 to 10? (0 is no pain, 10 is extreme pain)</p>
-					<label for="pain">Pain Scale:</label>
-					<input type="number" name="pain" min="0" max="10" id="pain">
 					<form>
-						Pins & needles<input type="checkbox" name="paraesthesia" value="pin-needles"><br>
-						Numbness<input type="checkbox" name="paraesthesia" value="numbness">
+						<p>What is your pain on a scale of 1 to 10? (0 is no pain, 10 is extreme pain)</p>
+						<label for="pain">Pain Scale:</label>
+						<input type="number" name="pain" min="0" max="10" id="pain">
+						<p>Pain description:</p>
+						<textarea></textarea>
+					</form>
+					<form>
+						<label for="pins-needles">Pins & needles</label>
+						<input type="checkbox" name="paraesthesia" value="pins-needles" id="pins-needles"><br>
+						<label for="numbness">Numbness</label>
+						<input type="checkbox" name="paraesthesia" value="numbness" id="numbness">
 					</form>
 				</div>
-				<div id="currentHx">
-					<h4>Current History</h4>
-					<textarea>Mechanism of Injury:</textarea>
-				</div>
-				<div id="agg">
-					<h4>Aggravating Factors</h4>
-					<textarea></textarea>
-				</div>
-				<div id="ease">
-					<h4>Easing Factors</h4>
-					<textarea></textarea>
-				</div>
-				<div id="daily24hr">
-					<h4>24 Hour Presentation</h4>
-					<textarea></textarea>
-				</div>
-				<div id="pastHx">
-					<h4>Past History</h4>
-					<textarea></textarea>
-				</div>
-				<div id="social-Hx">
-					<h4>Social & Family History</h4>
-					<textarea></textarea>
-				</div>
-				<div id="imaging">
-					<h4>Diagnostic Imaging</h4>
-					<textarea></textarea>
-				</div>
-				<div id="specialQ">
-					<h4>Special Questions</h4>
-					<textarea></textarea>
-				</div>
-				<div id="comments">
-					<h4>Additional Comments</h4>
-					<textarea></textarea>
+				<div class="flex-container">
+					<div id="currentHx">
+						<h4>Current History</h4>
+						<textarea>Mechanism of Injury:</textarea>
+					</div>
+					<div id="agg">
+						<h4>Aggravating Factors</h4>
+						<textarea></textarea>
+					</div>
+					<div id="ease">
+						<h4>Easing Factors</h4>
+						<textarea></textarea>
+					</div>
+					<div id="daily24hr">
+						<h4>24 Hour History</h4>
+						<textarea></textarea>
+					</div>
+					<div id="pastHx">
+						<h4>Past History</h4>
+						<textarea></textarea>
+					</div>
+					<div id="social-Hx">
+						<h4>Social & Family History</h4>
+						<textarea></textarea>
+					</div>
+					<div id="specialQ">
+						<h4>Special Questions</h4>
+						<textarea></textarea>
+					</div>
+					<div id="comments">
+						<h4>Additional Comments</h4>
+						<textarea></textarea>
+					</div>
 				</div>
 			</section>
 			<section id="physical">
@@ -100,66 +125,72 @@
 					<label for="consent">Consent</label>
 					<input type="checkbox" name="consent" id="consent">
 				</div>
-				<div id="observation">
-					<h4>Observation</h4>
-					<textarea></textarea>
-				</div>
-				<div id="active">
-					<h4>Active Movements</h4>
-					<textarea></textarea>
-				</div>
-				<div id="passive">
-					<h4>Passive Movements</h4>
-					<textarea></textarea>
-				</div>
-				<div id="strength">
-					<h4>Strength Tests</h4>
-					<textarea></textarea>
-				</div>
-				<div id="functional">
-					<h4>Functional Tests</h4>
-					<textarea></textarea>
-				</div>
-				<div id="neurological">
-					<h4>Neurological Tests</h4>
-					<textarea></textarea>
-				</div>
-				<div id="special-tests">
-					<h4>Special Tests</h4>
-					<textarea></textarea>
-				</div>
-				<div id="passive-accessory">
-					<h4>Passive Accessory Movements</h4>
-					<textarea></textarea>
-				</div>
-				<div id="palpation">
-					<h4>Palpation</h4>
-					<textarea></textarea>
-				</div>
-				<div id="other">
-					<h4>Other Tests/Comments</h4>
-					<textarea></textarea>
+				<div class="flex-container">
+					<div id="observation">
+						<h4>Observation</h4>
+						<textarea></textarea>
+					</div>
+					<div id="active">
+						<h4>Active Movements</h4>
+						<textarea></textarea>
+					</div>
+					<div id="passive">
+						<h4>Passive Movements</h4>
+						<textarea></textarea>
+					</div>
+					<div id="strength">
+						<h4>Strength Tests</h4>
+						<textarea></textarea>
+					</div>
+					<div id="functional">
+						<h4>Functional Tests</h4>
+						<textarea></textarea>
+					</div>
+					<div id="neurological">
+						<h4>Neurological Tests</h4>
+						<textarea></textarea>
+					</div>
+					<div id="special-tests">
+						<h4>Special Tests</h4>
+						<textarea></textarea>
+					</div>
+					<div id="passive-accessory">
+						<h4>Passive Accessory Movements</h4>
+						<textarea></textarea>
+					</div>
+					<div id="palpation">
+						<h4>Palpation</h4>
+						<textarea></textarea>
+					</div>
+					<div id="other">
+						<h4>Other Tests/Comments</h4>
+						<textarea></textarea>
+					</div>
 				</div>
 			</section>
 			<section id="impression">
 				<h2>Diagnostic Impression/s</h2>
 				<form>
-					<input type="text" name="diagnosis" id="diagnosis1"><br>
-					<button id="btn-diagnosis">Add diagnosis</button>
+					<input type="text" name="diagnosis" id="diagnosis1">
+					<br><button id="btn-diagnosis">Add diagnosis</button>
 				</form>
 			</section>
 			<section id="treatments">
 				<h2>Treatments Provided</h2>
 				<form>
 					<input type="text" name="treatment" id="treatment1">
-					<button id="btn-treatment">Add treatment</button>
+					<br><button id="btn-treatment">Add treatment</button>
 				</form>
+			</section>
+			<section id="additional">
+				<h2>Additional Comments</h2>
+				<textarea></textarea>
 			</section>
 			<section id="plan">
 				<h2>Plan</h2>
 				<form>
 					<input type="text" name="plan" id="plan1">
-					<button id="btn-plan">Add plan</button>
+					<br><button id="btn-plan">Add plan</button>
 				</form>
 			</section>
 		</div>

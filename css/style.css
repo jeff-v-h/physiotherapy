@@ -1,0 +1,49 @@
+/*
+ * HEADER
+ */
+#header {
+	max-width: 1024px;
+	background-color: #BDEAFD;
+	text-align: center;
+	margin: auto;
+	padding-bottom: 1em;
+	padding-top: 1em;
+}
+
+/*
+ * MAIN PAGE
+ */
+#main section {
+	margin: auto;
+	max-width: 1024px;
+}
+
+/*
+ * PERSONAL DETAILS
+ */
+#details div {
+	margin-top: 2.5px;
+	margin-bottom: 2.5px;
+	margin-right: 2em;
+	display: inline-block;
+}
+
+/*
+ * SUBJECTIVE & OBJECTIVE
+ */
+
+ .flex-container {
+ 	display: -webkit-flex;
+ 	display: flex;
+ 	flex-wrap: wrap;
+ 	justify-content: space-around;
+ }
+
+ .flex-container div {
+ 	min-width: 25%;
+ }
+
+
+ /*
+ * FOOTER
+ */
