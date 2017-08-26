@@ -31,6 +31,13 @@
 /*
  * SUBJECTIVE & OBJECTIVE
  */
+canvas {
+	display: block;
+	border-radius: 5px;
+	border: 1px solid black;
+	box-shadow: 0 4px 0 0 #222;
+	cursor: url(../img/cursor.png), crosshair;
+}
 
  .flex-container {
  	display: flex;
