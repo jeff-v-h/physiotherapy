@@ -31,7 +31,28 @@
 /*
  * SUBJECTIVE & OBJECTIVE
  */
-canvas {
+
+.flex-container {
+ 	display: flex;
+ 	flex-wrap: wrap;
+ 	justify-content: space-around;
+ }
+
+.flex-container div {
+ 	min-width: 25%;
+ }
+
+
+/*
+ * SUBJECTIVE
+ */
+
+#myCanvas {
+	/** Note: do not create width and height here for canvas. It causes scaling issues 
+	and blurring of image. It also causes draw events to not be right no mousepointer; **/
+	margin-left: auto;
+	margin-right: auto;
+	margin-bottom: 	1em;
 	display: block;
 	border-radius: 5px;
 	border: 1px solid black;
@@ -39,26 +60,70 @@ canvas {
 	cursor: url(../img/cursor.png), crosshair;
 }
 
- .flex-container {
- 	display: flex;
- 	flex-wrap: wrap;
- 	justify-content: space-around;
- }
+#controls {
+	margin-left: auto;
+	margin-right: auto;
+	width: 600px;
+	overflow: hidden;
+}
 
- .flex-container div {
- 	min-width: 25%;
- }
+#colours {
+	float: left;
+}
+
+#btn-clear {
+	float: right;
+	border: 2px solid #999999;
+	width: 60px;
+	height: 60px;
+	border-radius: 50%;
+}
+
+#colours div {
+	width: 50px;
+	height: 50px;
+	display: inline-block;
+	border-radius: 50%;
+}
+
+.red {
+	background-color: red;
+}
+
+.blue {
+	background-color: blue;
+}
+
+.yellow {
+	background-color: #ffcc00;
+}
+
+.green {
+	background-color: green;
+}
+
+.selected {
+	border: solid 5px black;
+}
+
+
+
+
+/*
+ * PHYSICAL (OBJECTIVE)
+ */
 
 #btn-submit {
 	width: 150px;
 	height: 40px;
 }
 
- /*
+
+/*
  * FOOTER
  */
 
- #footer {
+#footer {
 	max-width: 1024px;
 	background-color: #BDEAFD;
 	text-align: center;
@@ -67,4 +132,4 @@ canvas {
 	margin-top: 1em;
 	padding-bottom: 1em;
 	padding-top: 1em;
- }
+}
