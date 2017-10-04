@@ -1,3 +1,8 @@
+// On page load, add col and row attributes to all textareas to create size
+$(document).ready(function() {
+	$('textarea').attr('rows', 5).attr('cols', 30);
+});
+
 //On page load, auto-fill for today's date
 $(document).ready(function() {
 	var today = new Date();
@@ -83,7 +88,6 @@ function clearCanvas() {
 	context.clearRect(0, 0, canvas.width, canvas.height);
 	loadCanvas();
 }
-
 
 // Add inputs when buttons are clicked
 var impressionForm = $('#impression').find('form');
