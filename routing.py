@@ -25,7 +25,7 @@ def editPatient():
 	return "page to edit a patient's personal details"
 
 @app.route('/physiofiles/<int:patient_id>/delete/')
-def editPatient():
+def deletePatient():
 	return "page to edit a patient's personal details"
 
 
@@ -65,3 +65,10 @@ def editTreatment():
 @app.route('/physiofiles/<int:patient_id>/diagnoses/<int:diagnosis_id>/treatments/<int:treatment_id>/delete/')
 def deletetreatment():
 	return "Cnofirm deletion of a treatment"
+
+
+## For running website on localhost:5000 in debug mode (automatic refresh of webserver on file save)
+if __name__ == '__main__':
+	app.secret_key = 'super_secret_key'
+	app.debug = True
+	app.run(host='0.0.0.0', port=5000)
