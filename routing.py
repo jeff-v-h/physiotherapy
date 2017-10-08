@@ -14,61 +14,61 @@ session = DBSession()
 @app.route('/')
 @app.route('/physiofiles/')
 def showPatients():
-	return "page to show list of physio/patient files" #render_template('')
+	return render_template('patients.html')
 
 @app.route('/physiofiles/new/')
 def newPatient():
-	return "page to create a new patient"
+	return render_template('newpatient.html')
 
 @app.route('/physiofiles/<int:patient_id>/edit/')
-def editPatient():
-	return "page to edit a patient's personal details"
+def editPatient(patient_id):
+	return render_template('editpatient.html')
 
 @app.route('/physiofiles/<int:patient_id>/delete/')
-def deletePatient():
-	return "page to edit a patient's personal details"
+def deletePatient(patient_id):
+	return render_template('deletepatient.html')
 
 
 ## Diagnoses/episodes
 @app.route('/physiofiles/<int:patient_id>/')
 @app.route('/physiofiles/<int:patient_id>/diagnoses/')
-def showDiagnoses():
-	return "page for showing all episodes for a specific patient"
+def showDiagnoses(patient_id):
+	return render_template('diagnoses.html')
 
 @app.route('/physiofiles/<int:patient_id>/diagnoses/new/')
-def newDiagnosis():
-	return "page for creating a new diagnosis or episode for a specific patient"
+def newDiagnosis(patient_id):
+	return render_template('newdiagnosis.html')
 
 @app.route('/physiofiles/<int:patient_id>/diagnoses/<int:diagnosis_id>/edit/')
-def editDiagnosis():
-	return "page to edit an existing episode"
+def editDiagnosis(patient_id, diagnosis_id):
+	return render_template('editdiagnosis.html')
 
-@app.route('/physiofiles/<int:patient_id>/diagnoses/<int:diagnosis_id>/edit/')
-def deleteDiagnosis():
-	return "page to confirm deletion of an episode"
+@app.route('/physiofiles/<int:patient_id>/diagnoses/<int:diagnosis_id>/delete/')
+def deleteDiagnosis(patient_id, diagnosis_id):
+	return render_template('deletediagnosis.html')
 
 
 ##Treatments
 @app.route('/physiofiles/<int:patient_id>/diagnoses/<int:diagnosis_id>/')
 @app.route('/physiofiles/<int:patient_id>/diagnoses/<int:diagnosis_id>/treatments/')
-def showTreatments():
-	return "Shows all treatments provided for a particular diagnosis for a patient"
+def showTreatments(patient_id, diagnosis_id):
+	return render_template('treatments.html')
 
 @app.route('/physiofiles/<int:patient_id>/diagnoses/<int:diagnosis_id>/treatments/new/')
-def newTreatment():
-	return "Create a new treatment provided"
+def newTreatment(patient_id, diagnosis_id):
+	return render_template('newtreatment.html')
 
 @app.route('/physiofiles/<int:patient_id>/diagnoses/<int:diagnosis_id>/treatments/<int:treatment_id>/edit/')
-def editTreatment():
-	return "Edit treatment"
+def editTreatment(patient_id, diagnosis_id, treatment_id):
+	return render_template('edittreatment.html')
 
 @app.route('/physiofiles/<int:patient_id>/diagnoses/<int:diagnosis_id>/treatments/<int:treatment_id>/delete/')
-def deletetreatment():
-	return "Cnofirm deletion of a treatment"
+def deletetreatment(patient_id, diagnosis_id, treatment_id):
+	return render_template('deletetreatment.html')
 
 
 ## For running website on localhost:5000 in debug mode (automatic refresh of webserver on file save)
 if __name__ == '__main__':
-	app.secret_key = 'super_secret_key'
+	app.secret_key = 'secret_key'
 	app.debug = True
 	app.run(host='0.0.0.0', port=5000)
