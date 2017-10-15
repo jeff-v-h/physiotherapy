@@ -13,28 +13,29 @@
 		</div>
 		<div id="main">
 			<div id="list">
+				<div>
+					Patient: {{patient.name}}
+				</div>
+				<div>
+					Diagnosis: {{diagnosis.name}}
+				</div>
+				<div>
+					<a href="{{ url_for('newTreatment', patient_id = patient.id, diagnosis_id = diagnosis.id) }}"><button>New Treatment</button></a>
+				</div>
+				{% for treatment in treatments %}
 				<div class="list-item">
 					<div>
-						Treatment
+						{{treatment.name}}
 					</div>
 					<div>
-						<button>Edit</button>
+						<a href="{{ url_for('editTreatment', patient_id = patient.id, diagnosis_id = diagnosis.id, treatment_id = treatment.id) }}"><button>Edit</button></a>
 					</div>
 					<div>
-						<button>Delete</button>
+						<a href="{{ url_for('deleteDiagnosis', patient_id = patient.id, diagnosis_id = diagnosis.id, treatment_id = treatment.id) }}"><button>Delete</button></a>
 					</div>
 				</div>
-				<div class="list-item">
-					<div>
-						Treatment
-					</div>
-					<div>
-						<button>Edit</button>
-					</div>
-					<div>
-						<button>Delete</button>
-					</div>
-				</div>
+				{% endfor %}
+
 			</div>
 		</div>
 	</div>

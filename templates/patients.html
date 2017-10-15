@@ -16,28 +16,21 @@
 				<a href="{{ url_for('newPatient') }}"><button>New Patient</button></a>
 			</div>
 			<div id="list">
+
+				{% for patient in patients %}
 				<div class="list-item">
 					<div>
-						Patient Name
+						<a href="{{ url_for('showDiagnoses', patient_id = patient.id) }}">{{patient.name}}</a> with id: {{patient.id}}
 					</div>
 					<div>
-						<button>Edit</button>
+						<a href="{{ url_for('editPatient', patient_id = patient.id) }}"><button>Edit</button></a>
 					</div>
 					<div>
-						<button>Delete</button>
+						<a href="{{ url_for('deletePatient', patient_id = patient.id) }}"><button>Delete</button></a>
 					</div>
 				</div>
-				<div class="list-item">
-					<div>
-						Patient Name
-					</div>
-					<div>
-						<button>Edit</button>
-					</div>
-					<div>
-						<button>Delete</button>
-					</div>
-				</div>
+				{% endfor %}
+				
 			</div>	
 		</div>
 	</div>

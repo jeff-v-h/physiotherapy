@@ -13,13 +13,17 @@
 		</div>
 		<div id="main">
 			<div>
-				Patient Name 
+				Patient: {{patient.name}}
 			</div>
 			<div>
-				examination and diagnosis
+				Diagnosis: <input type="text" name="diagnosis" size="30">
 			</div>
 			<div>
-				<button>Create</button>
+				Details: <input type="text" name="details" size="30">
+			</div>
+			<div>
+				<a href="{{ url_for('showDiagnoses', patient_id = patient.id) }}"><button>Create</button></a>
+				<a href="{{ url_for('showDiagnoses', patient_id = patient.id) }}"><button>Cancel</button></a>
 			</div>
 		</div>
 	</div>

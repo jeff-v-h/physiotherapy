@@ -13,16 +13,17 @@
 		</div>
 		<div id="main">
 			<div>
-				Patient Name
+				Patient Name: {{patient.name}}
 			</div>
 			<div>
-				Patient details
+				Patient details: 
 			</div>
 			<div>
 				Do you really wish to delete patient?
 			</div>
 			<div>
-				<button>Delete</button>
+				<a href="{{ url_for('showPatients') }}"><button>Delete</button></a>
+				<a href="{{ url_for('showPatients') }}"><button>Cancel</button></a>
 			</div>
 		</div>
 	</div>

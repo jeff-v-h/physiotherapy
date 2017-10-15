@@ -13,41 +13,25 @@
 		</div>
 		<div id="main">
 			<div id="list">
+				<div>
+					Patient: {{patient.name}}
+				</div>
+				<div>
+					<a href="{{ url_for('newDiagnosis', patient_id = patient.id) }}"><button>New Diagnosis</button></a>
+				</div>
+				{% for diagnosis in diagnoses %}
 				<div class="list-item">
 					<div>
-						Diagnosis
+						<a href="{{ url_for('showTreatments', patient_id = patient.id, diagnosis_id = diagnosis.id) }}">{{diagnosis.name}}</a> with id: {{diagnosis.id}}
 					</div>
 					<div>
-						<button>Edit</button>
+						<a href="{{ url_for('editDiagnosis', patient_id = patient.id, diagnosis_id = diagnosis.id) }}"><button>Edit</button></a>
 					</div>
 					<div>
-						<button>Delete</button>
+						<a href="{{ url_for('deleteDiagnosis', patient_id = patient.id, diagnosis_id = diagnosis.id) }}"><button>Delete</button></a>
 					</div>
 				</div>
-
-				<div class="list-item">
-					<div>
-						Diagnosis
-					</div>
-					<div>
-						<button>Edit</button>
-					</div>
-					<div>
-						<button>Delete</button>
-					</div>
-				</div>
-
-				<div class="list-item">
-					<div>
-						Diagnosis
-					</div>
-					<div>
-						<button>Edit</button>
-					</div>
-					<div>
-						<button>Delete</button>
-					</div>
-				</div>
+				{% endfor %}
 
 			</div>
 		</div>
