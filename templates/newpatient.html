@@ -14,7 +14,7 @@
 		<div id="main">
 			<section id="details">
 				<h2>Personal Details</h2>
-				<form>
+				<form action="{{url_for('newPatient')}}" method="post">
 					<div>
 						<label for="date">Date:</label>
 						<input type="date" name="date" id="date" class="required">
@@ -64,7 +64,9 @@
 						<label for="occupation">Occupation:</label>
 						<input type="text" name="occupation" id="occupation">
 					</div>
+					<input type="submit" value="Create">
 				</form>
+				<a href="{{ url_for('showPatients') }}"><button>Cancel</button></a>
 			</section>
 			<section id="subjective">
 				<h2>Subjective Examination</h2>

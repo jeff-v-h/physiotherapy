@@ -11,7 +11,8 @@ class Patient(Base):
 	__tablename__ = 'patient'
 
 	id = Column(Integer, primary_key=True)
-	name = Column(String(250), nullable=False)
+	firstname = Column(String(250), nullable=False)
+	lastname = Column(String(250), nullable=False)
 
 
 class Diagnosis(Base):

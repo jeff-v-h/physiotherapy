@@ -20,7 +20,7 @@
 				{% for patient in patients %}
 				<div class="list-item">
 					<div>
-						<a href="{{ url_for('showDiagnoses', patient_id = patient.id) }}">{{patient.name}}</a> with id: {{patient.id}}
+						<a href="{{ url_for('showDiagnoses', patient_id = patient.id) }}">{{patient.firstname}} {{patient.lastname}}</a> with id: {{patient.id}}
 					</div>
 					<div>
 						<a href="{{ url_for('editPatient', patient_id = patient.id) }}"><button>Edit</button></a>

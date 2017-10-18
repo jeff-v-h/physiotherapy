@@ -11,6 +11,7 @@ DBSession = sessionmaker(bind=engine)
 session = DBSession()
 
 #Fake Temporary data
+''''
 temppatient = {'name': 'Jeffrey Huang', 'id': '1'}
 temppatients = [{'name': 'Jeffrey Huang', 'id': '1'}, {'name': 'Katherine Kuorence', 'id': '2'}, 
 {'name': 'Timothy Lee', 'id': '3'}]
@@ -22,24 +23,47 @@ temptreatment = {'name': 'mobilisations', 'id': '1', 'description': 'grade 2 PA 
 temptreatments = [{'name': 'mobilisations', 'id': '1', 'description': 'grade 2 PA L1-5', 'patient_id': '1', 'patient': 'Jeffrey Huang', 'diagnosis_id': '1', 'diagnosis': 'lumbar disc bulge'}, 
 {'name': 'Eccentric hamstring curls', 'id': '2', 'description': '3sets 15reps 2.5kg', 'patient_id': '2', 'patient': 'Katherine Kuorence', 'diagnosis_id': '2', 'diagnosis': 'Hamstring Tendinopathy'}, 
 {'name': 'Short arc quad extensions', 'id': '3', 'description': '3sets 6reps', 'patient_id': '3', 'patient': 'Timothy Lee', 'diagnosis_id': '3', 'diagnosis': 'PCL tear'}]
+'''
 
 ## Routes for saving patients, editing and deleting
 @app.route('/')
 @app.route('/physiofiles/')
 def showPatients():
-	return render_template('patients.html', patients = temppatients)
+	patientList = session.query(Patient).all()
+	return render_template('patients.html', patients = patientList)
 
-@app.route('/physiofiles/new/')
-def newPatient():
-	return render_template('newpatient.html')
+@app.route('/physiofiles/new/', methods=['GET', 'POST'])
+def newPatient(): 
+	if request.method == 'POST':
+		newPatient = Patient(firstname = request.form['firstname'], lastname = request.form['lastname'])
+		session.add(newPatient)
+		session.commit()
+		return redirect(url_for('showPatients'))
+	else:
+		return render_template('newpatient.html')
 
-@app.route('/physiofiles/<int:patient_id>/edit/')
+@app.route('/physiofiles/<int:patient_id>/edit/', methods=['GET', 'POST'])
 def editPatient(patient_id):
-	return render_template('editpatient.html', patient = temppatient)
+	patientToEdit = session.query(Patient).filter_by(id = patient_id).one()
+	if request.method == 'POST':
+		if request.form['firstname'] and request.form['lastname']:
+			patientToEdit.firstname = request.form['firstname']
+			patientToEdit.lastname = request.form['lastname']
+		session.add(patientToEdit)
+		session.commit()
+		return redirect(url_for('showPatients'))
+	else:
+		return render_template('editpatient.html', patient = patientToEdit)
 
-@app.route('/physiofiles/<int:patient_id>/delete/')
+@app.route('/physiofiles/<int:patient_id>/delete/', methods=['GET', 'POST'])
 def deletePatient(patient_id):
-	return render_template('deletepatient.html', patient = temppatient)
+	patientToDelete = session.query(Patient).filter_by(id = patient_id).one()
+	if request.method == 'POST':
+		session.delete(patientToDelete)
+		session.commit()
+		return redirect(url_for('showPatients'))
+	else:
+		return render_template('deletepatient.html', patient = patientToDelete)
 
 
 ## Diagnoses/episodes
@@ -48,15 +72,15 @@ def deletePatient(patient_id):
 def showDiagnoses(patient_id):
 	return render_template('diagnoses.html', patient = temppatient, diagnoses = tempdiagnoses)
 
-@app.route('/physiofiles/<int:patient_id>/diagnoses/new/')
+@app.route('/physiofiles/<int:patient_id>/diagnoses/new/', methods=['GET', 'POST'])
 def newDiagnosis(patient_id):
 	return render_template('newdiagnosis.html', patient = temppatient)
 
-@app.route('/physiofiles/<int:patient_id>/diagnoses/<int:diagnosis_id>/edit/')
+@app.route('/physiofiles/<int:patient_id>/diagnoses/<int:diagnosis_id>/edit/', methods=['GET', 'POST'])
 def editDiagnosis(patient_id, diagnosis_id):
 	return render_template('editdiagnosis.html', patient = temppatient, diagnosis = tempdiagnosis)
 
-@app.route('/physiofiles/<int:patient_id>/diagnoses/<int:diagnosis_id>/delete/')
+@app.route('/physiofiles/<int:patient_id>/diagnoses/<int:diagnosis_id>/delete/', methods=['GET', 'POST'])
 def deleteDiagnosis(patient_id, diagnosis_id):
 	return render_template('deletediagnosis.html', patient = temppatient, diagnosis = tempdiagnosis)
 
@@ -67,15 +91,15 @@ def deleteDiagnosis(patient_id, diagnosis_id):
 def showTreatments(patient_id, diagnosis_id):
 	return render_template('treatments.html', patient = temppatient, diagnosis = tempdiagnosis, treatments = temptreatments)
 
-@app.route('/physiofiles/<int:patient_id>/diagnoses/<int:diagnosis_id>/treatments/new/')
+@app.route('/physiofiles/<int:patient_id>/diagnoses/<int:diagnosis_id>/treatments/new/', methods=['GET', 'POST'])
 def newTreatment(patient_id, diagnosis_id):
 	return render_template('newtreatment.html', patient = temppatient, diagnosis = tempdiagnosis)
 
-@app.route('/physiofiles/<int:patient_id>/diagnoses/<int:diagnosis_id>/treatments/<int:treatment_id>/edit/')
+@app.route('/physiofiles/<int:patient_id>/diagnoses/<int:diagnosis_id>/treatments/<int:treatment_id>/edit/', methods=['GET', 'POST'])
 def editTreatment(patient_id, diagnosis_id, treatment_id):
 	return render_template('edittreatment.html', patient = temppatient, diagnosis = tempdiagnosis, treatment = temptreatment)
 
-@app.route('/physiofiles/<int:patient_id>/diagnoses/<int:diagnosis_id>/treatments/<int:treatment_id>/delete/')
+@app.route('/physiofiles/<int:patient_id>/diagnoses/<int:diagnosis_id>/treatments/<int:treatment_id>/delete/', methods=['GET', 'POST'])
 def deletetreatment(patient_id, diagnosis_id, treatment_id):
 	return render_template('deletetreatment.html', patient = temppatient, diagnosis = tempdiagnosis, treatment = temptreatment)
 
