@@ -12,17 +12,21 @@
 			<h1>Edit Diagnosis</h1>
 		</div>
 		<div id="main">
+			<form action="{{url_for('editDiagnosis', patient_id = patient.id, diagnosis_id = diagnosis.id)}}" method="post">
+				<div>
+					Patient: {{patient.firstname}} {{patient.lastname}}
+				</div>
+				<div>
+					Diagnosis: <input type="text" name="diagnosis" size="30" value="{{diagnosis.name}}">
+				</div>
+				<div>
+					Details: <input type="text" name="details" size="30" value="Edit information here">
+				</div>
+				<div>
+					<a href="{{ url_for('showDiagnoses', patient_id = patient.id) }}"><button>Edit</button></a>
+				</div>
+			</form>
 			<div>
-				Patient: {{patient.name}}
-			</div>
-			<div>
-				Diagnosis: <input type="text" name="diagnosis" size="30" value="{{diagnosis.name}}">
-			</div>
-			<div>
-				Details: <input type="text" name="details" size="30" value="Edit information here">
-			</div>
-			<div>
-				<a href="{{ url_for('showDiagnoses', patient_id = patient.id) }}"><button>Edit</button></a>
 				<a href="{{ url_for('showDiagnoses', patient_id = patient.id) }}"><button>Cancel</button></a>
 			</div>
 		</div>

@@ -70,19 +70,44 @@ def deletePatient(patient_id):
 @app.route('/physiofiles/<int:patient_id>/')
 @app.route('/physiofiles/<int:patient_id>/diagnoses/')
 def showDiagnoses(patient_id):
-	return render_template('diagnoses.html', patient = temppatient, diagnoses = tempdiagnoses)
+	diagnosesForPatient = session.query(Diagnosis).filter_by(patient_id = patient_id).all()
+	patient = session.query(Patient).filter_by(id = patient_id).one()
+	return render_template('diagnoses.html', patient = patient, diagnoses = diagnosesForPatient)
 
 @app.route('/physiofiles/<int:patient_id>/diagnoses/new/', methods=['GET', 'POST'])
 def newDiagnosis(patient_id):
-	return render_template('newdiagnosis.html', patient = temppatient)
+	patient = session.query(Patient).filter_by(id = patient_id).one()
+	if request.method == 'POST':
+		newDiagnosis = Diagnosis(name = request.form['diagnosis'], patient_id = patient.id)
+		session.add(newDiagnosis)
+		session.commit()
+		return redirect(url_for('showDiagnoses', patient_id = patient.id))
+	else:
+		return render_template('newdiagnosis.html', patient = patient)
 
 @app.route('/physiofiles/<int:patient_id>/diagnoses/<int:diagnosis_id>/edit/', methods=['GET', 'POST'])
 def editDiagnosis(patient_id, diagnosis_id):
-	return render_template('editdiagnosis.html', patient = temppatient, diagnosis = tempdiagnosis)
+	patient = session.query(Patient).filter_by(id = patient_id).one()
+	diagnosisToEdit = session.query(Diagnosis).filter_by(id = diagnosis_id).one()
+	if request.method == 'POST':
+		if request.form['diagnosis']:
+			diagnosisToEdit.name = request.form['diagnosis']
+			session.add(diagnosisToEdit)
+			session.commit()
+		return redirect(url_for('showDiagnoses', patient_id = patient.id))
+	else:
+		return render_template('editdiagnosis.html', patient = patient, diagnosis = diagnosisToEdit)
 
 @app.route('/physiofiles/<int:patient_id>/diagnoses/<int:diagnosis_id>/delete/', methods=['GET', 'POST'])
 def deleteDiagnosis(patient_id, diagnosis_id):
-	return render_template('deletediagnosis.html', patient = temppatient, diagnosis = tempdiagnosis)
+	patient = session.query(Patient).filter_by(id = patient_id).one()
+	diagnosisToDelete = session.query(Diagnosis).filter_by(id = diagnosis_id).one()
+	if request.method == 'POST':
+		session.delete(diagnosisToDelete)
+		session.commit()
+		return redirect(url_for('showDiagnoses', patient_id = patient.id))
+	else:
+		return render_template('deletediagnosis.html', patient = patient, diagnosis = diagnosisToDelete)
 
 
 ##Treatments

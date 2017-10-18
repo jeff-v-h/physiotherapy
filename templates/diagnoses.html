@@ -14,7 +14,7 @@
 		<div id="main">
 			<div id="list">
 				<div>
-					Patient: {{patient.name}}
+					Patient: {{patient.firstname}} {{patient.lastname}}
 				</div>
 				<div>
 					<a href="{{ url_for('newDiagnosis', patient_id = patient.id) }}"><button>New Diagnosis</button></a>
