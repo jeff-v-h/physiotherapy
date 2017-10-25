@@ -114,19 +114,48 @@ def deleteDiagnosis(patient_id, diagnosis_id):
 @app.route('/physiofiles/<int:patient_id>/diagnoses/<int:diagnosis_id>/')
 @app.route('/physiofiles/<int:patient_id>/diagnoses/<int:diagnosis_id>/treatments/')
 def showTreatments(patient_id, diagnosis_id):
-	return render_template('treatments.html', patient = temppatient, diagnosis = tempdiagnosis, treatments = temptreatments)
+	patient = session.query(Patient).filter_by(id = patient_id).one()
+	diagnosis = session.query(Diagnosis).filter_by(id = diagnosis_id).one()
+	treatments = session.query(Treatment).filter_by(diagnosis_id = diagnosis_id).all()
+	return render_template('treatments.html', patient = patient, diagnosis = diagnosis, treatments = treatments)
 
 @app.route('/physiofiles/<int:patient_id>/diagnoses/<int:diagnosis_id>/treatments/new/', methods=['GET', 'POST'])
 def newTreatment(patient_id, diagnosis_id):
-	return render_template('newtreatment.html', patient = temppatient, diagnosis = tempdiagnosis)
+	patient = session.query(Patient).filter_by(id = patient_id).one()
+	diagnosis = session.query(Diagnosis).filter_by(id = diagnosis_id).one()
+	if request.method == 'POST':
+		newTreatment = Treatment(name = request.form['treatment'], patient_id = patient.id, diagnosis_id = diagnosis.id)
+		session.add(newTreatment)
+		session.commit()
+		return redirect(url_for('showTreatments', patient_id = patient.id, diagnosis_id = diagnosis.id))
+	else:
+		return render_template('newtreatment.html', patient = patient, diagnosis = diagnosis)
 
 @app.route('/physiofiles/<int:patient_id>/diagnoses/<int:diagnosis_id>/treatments/<int:treatment_id>/edit/', methods=['GET', 'POST'])
 def editTreatment(patient_id, diagnosis_id, treatment_id):
-	return render_template('edittreatment.html', patient = temppatient, diagnosis = tempdiagnosis, treatment = temptreatment)
+	patient = session.query(Patient).filter_by(id = patient_id).one()
+	diagnosis = session.query(Diagnosis).filter_by(id = diagnosis_id).one()
+	treatmentToEdit = session.query(Treatment).filter_by(id = treatment_id).one()
+	if request.method == 'POST':
+		if request.form['treatment']:
+			treatmentToEdit.name = request.form['treatment']
+			session.add(treatmentToEdit)
+			session.commit()
+		return redirect(url_for('showTreatments', patient_id = patient.id, diagnosis_id = diagnosis.id))
+	else:
+		return render_template('edittreatment.html', patient = patient, diagnosis = diagnosis, treatment = treatmentToEdit)
 
 @app.route('/physiofiles/<int:patient_id>/diagnoses/<int:diagnosis_id>/treatments/<int:treatment_id>/delete/', methods=['GET', 'POST'])
-def deletetreatment(patient_id, diagnosis_id, treatment_id):
-	return render_template('deletetreatment.html', patient = temppatient, diagnosis = tempdiagnosis, treatment = temptreatment)
+def deleteTreatment(patient_id, diagnosis_id, treatment_id):
+	patient = session.query(Patient).filter_by(id = patient_id).one()
+	diagnosis = session.query(Diagnosis).filter_by(id = diagnosis_id).one()
+	treatmentToDelete = session.query(Treatment).filter_by(id = treatment_id).one()
+	if request.method == 'POST':
+		session.delete(treatmentToDelete)
+		session.commit()
+		return redirect(url_for('showTreatments', patient_id = patient.id, diagnosis_id = diagnosis.id))
+	else:
+		return render_template('deletetreatment.html', patient = patient, diagnosis = diagnosis, treatment = treatmentToDelete)
 
 
 ## For running website on localhost:5000 in debug mode (automatic refresh of webserver on file save)
