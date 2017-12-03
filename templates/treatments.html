@@ -31,10 +31,7 @@
 				<div class="list-item">
 					<div>
 						{{treatment.name}} with id: {{treatment.id}} <br>
-						Treatment diagnosis.id: {{treatment.diagnosis_id}} <br>
-						Treatment attributed diagnosis: {{treatment.diagnosis}} <br>
-						Treatment's patient_id: {{treatment.patient_id}} <br>
-						Treatment's patient: {{treatment.patient}} <br>
+						Comments: {{treatment.description}}
 					</div>
 					<div>
 						<a href="{{ url_for('editTreatment', patient_id = patient.id, diagnosis_id = diagnosis.id, treatment_id = treatment.id) }}"><button>Edit</button></a>

@@ -124,7 +124,7 @@ def newTreatment(patient_id, diagnosis_id):
 	patient = session.query(Patient).filter_by(id = patient_id).one()
 	diagnosis = session.query(Diagnosis).filter_by(id = diagnosis_id).one()
 	if request.method == 'POST':
-		newTreatment = Treatment(name = request.form['treatment'], patient_id = patient.id, diagnosis_id = diagnosis.id)
+		newTreatment = Treatment(name = request.form['treatment'], patient_id = patient.id, diagnosis_id = diagnosis.id, description = request.form['comment'])
 		session.add(newTreatment)
 		session.commit()
 		return redirect(url_for('showTreatments', patient_id = patient.id, diagnosis_id = diagnosis.id))

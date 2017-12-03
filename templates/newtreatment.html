@@ -23,32 +23,21 @@
 			<div>
 				Diagnosis: {{diagnosis.name}}
 			</div>
-			<form action="{{url_for('newTreatment', patient_id = patient.id, diagnosis_id = diagnosis.id)}}" method="post">
-				
+			<form action="{{url_for('newTreatment', patient_id = patient.id, diagnosis_id = diagnosis.id)}}" method="post" id="newTreatmentForm">
 				<section id="treatments">
 					<h2>Treatments Provided</h2>
-					<form>
-						<input type="text" name="treatment" id="treatment1">
-					</form>
+					<input type="text" name="treatment" id="treatment1">
 					<br><button id="btn-treatment" onclick="addTreatment()">Add treatment</button>
 				</section>
 				<section id="additional">
 					<h2>Additional Comments</h2>
-					<textarea></textarea>
+					<textarea name="comment" form="newTreatmentForm"></textarea>
 				</section>
 				<section id="plan">
 					<h2>Plan</h2>
-					<form>
-						<input type="text" name="plan" id="plan1">
-					</form>
+					<input type="text" name="plan" id="plan1">
 					<br><button id="btn-plan" onclick="addPlan()">Add plan</button>
 				</section>
-				<div>
-					Treatment: <input type="text" name="treatment" size="30">
-				</div>
-				<div>
-					Details: <input type="text" name="details" size="30">
-				</div>
 				<div>
 					<a href="{{ url_for('showTreatments', patient_id = patient.id, diagnosis_id = diagnosis.id) }}"><button>Create</button></a>
 				</div>
