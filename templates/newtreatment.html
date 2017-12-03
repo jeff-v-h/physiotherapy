@@ -8,17 +8,41 @@
 </head>
 <body>
 	<div id="content">
+		<div id="topbar">
+			<div>
+				<a href="{{url_for('showPatients')}}">Home</a>
+			</div>
+		</div>
 		<div id="header">
 			<h1>New treatment</h1>
 		</div>
 		<div id="main">
+			<div>
+				Patient: {{patient.firstname}} {{patient.lastname}}
+			</div>
+			<div>
+				Diagnosis: {{diagnosis.name}}
+			</div>
 			<form action="{{url_for('newTreatment', patient_id = patient.id, diagnosis_id = diagnosis.id)}}" method="post">
-				<div>
-					Patient: {{patient.firstname}} {{patient.lastname}}
-				</div>
-				<div>
-					Diagnosis: {{diagnosis.name}}
-				</div>
+				
+				<section id="treatments">
+					<h2>Treatments Provided</h2>
+					<form>
+						<input type="text" name="treatment" id="treatment1">
+					</form>
+					<br><button id="btn-treatment" onclick="addTreatment()">Add treatment</button>
+				</section>
+				<section id="additional">
+					<h2>Additional Comments</h2>
+					<textarea></textarea>
+				</section>
+				<section id="plan">
+					<h2>Plan</h2>
+					<form>
+						<input type="text" name="plan" id="plan1">
+					</form>
+					<br><button id="btn-plan" onclick="addPlan()">Add plan</button>
+				</section>
 				<div>
 					Treatment: <input type="text" name="treatment" size="30">
 				</div>

@@ -8,17 +8,22 @@
 </head>
 <body>
 	<div id="content">
+		<div id="topbar">
+			<div>
+				<a href="{{url_for('showPatients')}}">Home</a>
+			</div>
+		</div>
 		<div id="header">
 			<h1>Diagnoses</h1>
 		</div>
 		<div id="main">
+			<div>
+				Patient: {{patient.firstname}} {{patient.lastname}}
+			</div>
+			<div>
+				<a href="{{ url_for('newDiagnosis', patient_id = patient.id) }}"><button>New Diagnosis</button></a>
+			</div>
 			<div id="list">
-				<div>
-					Patient: {{patient.firstname}} {{patient.lastname}}
-				</div>
-				<div>
-					<a href="{{ url_for('newDiagnosis', patient_id = patient.id) }}"><button>New Diagnosis</button></a>
-				</div>
 				{% for diagnosis in diagnoses %}
 				<div class="list-item">
 					<div>
@@ -36,5 +41,8 @@
 			</div>
 		</div>
 	</div>
+	<footer id="footer">
+		<p>Copyright</p>
+	</footer>
 </body>
 </html>

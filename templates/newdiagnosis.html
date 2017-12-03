@@ -4,18 +4,147 @@
 	<meta charset="utf-8">
 	<title>Physio History Chart</title>
 	<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='style.css') }}">
+	<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='newformstyle.css')}}">
 	<meta name="viewport" content="width=device-width,initial-scale=1">
 </head>
 <body>
 	<div id="content">
+		<div id="topbar">
+			<div>
+				<a href="{{url_for('showPatients')}}">Home</a>
+			</div>
+		</div>
 		<div id="header">
 			<h1>New Diagnosis</h1>
 		</div>
 		<div id="main">
-			<form action="{{url_for('newDiagnosis', patient_id = patient.id)}}" method="post">
-				<div>	
-					Patient: {{patient.firstname}} {{patient.lastname}}
+			<div>	
+				Patient: {{patient.firstname}} {{patient.lastname}}
+			</div>
+			<section id="subjective">
+				<h2>Subjective Examination</h2>
+				<div id="body-chart">
+					<h4>Body Chart</h4>
+					<canvas id="myCanvas" width="600" height="400"></canvas>
+					<div id="controls">
+						<div id="colours">
+							<div class="red selected"></div>
+							<div class="blue"></div>
+							<div class="yellow"></div>
+							<div class="green"></div>
+						</div>
+						<button id="btn-clear" onclick="clearCanvas()">Clear</button>
+					</div>
 				</div>
+				<div id="vas" style="display: block">
+					<h4>Pain Presentation</h4>
+					<form>
+						<p>What is your pain on a scale of 1 to 10? (0 is no pain, 10 is extreme pain)</p>
+						<label for="pain">Pain Scale:</label>
+						<input type="number" name="pain" min="0" max="10" id="pain">
+						<p>Pain description:</p>
+						<textarea></textarea>
+					</form>
+					<form>
+						<label for="pins-needles">Pins & needles</label>
+						<input type="checkbox" name="paraesthesia" value="pins-needles" id="pins-needles"><br>
+						<label for="numbness">Numbness</label>
+						<input type="checkbox" name="paraesthesia" value="numbness" id="numbness">
+					</form>
+				</div>
+				<div class="flex-container">
+					<div id="currentHx">
+						<h4>Current History</h4>
+						<textarea>Mechanism of Injury:</textarea>
+					</div>
+					<div id="agg">
+						<h4>Aggravating Factors</h4>
+						<textarea></textarea>
+					</div>
+					<div id="ease">
+						<h4>Easing Factors</h4>
+						<textarea></textarea>
+					</div>
+					<div id="daily24hr">
+						<h4>24 Hour History</h4>
+						<textarea></textarea>
+					</div>
+					<div id="pastHx">
+						<h4>Past History</h4>
+						<textarea></textarea>
+					</div>
+					<div id="social-Hx">
+						<h4>Social & Family History</h4>
+						<textarea></textarea>
+					</div>
+					<div id="specialQ">
+						<h4>Special Questions</h4>
+						<textarea></textarea>
+					</div>
+					<div id="comments">
+						<h4>Additional Comments</h4>
+						<textarea></textarea>
+					</div>
+				</div>
+			</section>
+			<section id="physical">
+				<h2>Physical Examination</h2>
+				<div>
+					<label for="consent">Consent</label>
+					<input type="checkbox" name="consent" id="consent">
+				</div>
+				<div class="flex-container">
+					<div id="observation">
+						<h4>Observation</h4>
+						<textarea></textarea>
+					</div>
+					<div id="active">
+						<h4>Active Movements</h4>
+						<textarea></textarea>
+					</div>
+					<div id="passive">
+						<h4>Passive Movements</h4>
+						<textarea></textarea>
+					</div>
+					<div id="strength">
+						<h4>Strength Tests</h4>
+						<textarea></textarea>
+					</div>
+					<div id="functional">
+						<h4>Functional Tests</h4>
+						<textarea></textarea>
+					</div>
+					<div id="neurological">
+						<h4>Neurological Tests</h4>
+						<textarea></textarea>
+					</div>
+					<div id="special-tests">
+						<h4>Special Tests</h4>
+						<textarea></textarea>
+					</div>
+					<div id="passive-accessory">
+						<h4>Passive Accessory Movements</h4>
+						<textarea></textarea>
+					</div>
+					<div id="palpation">
+						<h4>Palpation</h4>
+						<textarea></textarea>
+					</div>
+					<div id="other">
+						<h4>Other Tests/Comments</h4>
+						<textarea></textarea>
+					</div>
+				</div>
+			</section>
+			<section id="impression">
+				<h2>Diagnostic Impression/s</h2>
+				<form>
+					<input type="text" name="diagnosis" id="diagnosis1">
+				</form>
+				<br><button id="btn-diagnosis" onclick="addDiagnosis()">Additional diagnosis</button>
+			</section>
+
+			<form action="{{url_for('newDiagnosis', patient_id = patient.id)}}" method="post">
 				<div>
 					Diagnosis: <input type="text" name="diagnosis" size="30">
 				</div>

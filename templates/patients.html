@@ -8,15 +8,19 @@
 </head>
 <body>
 	<div id="content">
+		<div id="topbar">
+			<div>
+				<a href="{{url_for('showPatients')}}">Home</a>
+			</div>
+		</div>
 		<div id="header">
 			<h1>Physio Files</h1>
 		</div>
 		<div id="main">
-			<div>
+			<div id="top-buttons">
 				<a href="{{ url_for('newPatient') }}"><button>New Patient</button></a>
 			</div>
 			<div id="list">
-
 				{% for patient in patients %}
 				<div class="list-item">
 					<div>
@@ -34,5 +38,8 @@
 			</div>	
 		</div>
 	</div>
+	<footer id="footer">
+		<p>Copyright</p>
+	</footer>
 </body>
 </html>
