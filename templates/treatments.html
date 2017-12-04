@@ -30,8 +30,8 @@
 				{% for treatment in treatments %}
 				<div class="list-item">
 					<div>
-						{{treatment.name}} with id: {{treatment.id}} <br>
-						Comments: {{treatment.description}}
+						{{treatment.treatment1}} with id: {{treatment.id}} <br>
+						Comments: {{treatment.comments}}
 					</div>
 					<div>
 						<a href="{{ url_for('editTreatment', patient_id = patient.id, diagnosis_id = diagnosis.id, treatment_id = treatment.id) }}"><button>Edit</button></a>

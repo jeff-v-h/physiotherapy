@@ -3,27 +3,12 @@ app = Flask(__name__)
 
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-from database_setup import Base, Patient, Diagnosis, BodyChart, Treatment
+from database_setup import Base, Patient, Diagnosis, Subjective, BodyChart, Objective, Treatment
 
 engine = create_engine('sqlite:///patientfiles.db')
 Base.metadata.bind = engine
 DBSession = sessionmaker(bind=engine)
 session = DBSession()
-
-#Fake Temporary data
-''''
-temppatient = {'name': 'Jeffrey Huang', 'id': '1'}
-temppatients = [{'name': 'Jeffrey Huang', 'id': '1'}, {'name': 'Katherine Kuorence', 'id': '2'}, 
-{'name': 'Timothy Lee', 'id': '3'}]
-tempdiagnoses = [{'name': 'lumbar disc bulge', 'id': '1', 'patient_id': '1', 'patient': 'Jeffrey Huang'}, 
-{'name': 'Hamstring Tendinopathy', 'id': '2', 'patient_id': '2', 'patient': 'Katherine Kuorence'}, 
-{'name': 'PCL tear', 'id': '3', 'patient_id': '3', 'patient': 'Timothy Lee'}]
-tempdiagnosis = {'name': 'lumbar disc bulge', 'id': '1', 'patient_id': '1', 'patient': 'Jeffrey Huang'}
-temptreatment = {'name': 'mobilisations', 'id': '1', 'description': 'grade 2 PA L1-5', 'patient_id': '1', 'patient': 'Jeffrey Huang', 'diagnosis_id': '1', 'diagnosis': 'lumbar disc bulge'}
-temptreatments = [{'name': 'mobilisations', 'id': '1', 'description': 'grade 2 PA L1-5', 'patient_id': '1', 'patient': 'Jeffrey Huang', 'diagnosis_id': '1', 'diagnosis': 'lumbar disc bulge'}, 
-{'name': 'Eccentric hamstring curls', 'id': '2', 'description': '3sets 15reps 2.5kg', 'patient_id': '2', 'patient': 'Katherine Kuorence', 'diagnosis_id': '2', 'diagnosis': 'Hamstring Tendinopathy'}, 
-{'name': 'Short arc quad extensions', 'id': '3', 'description': '3sets 6reps', 'patient_id': '3', 'patient': 'Timothy Lee', 'diagnosis_id': '3', 'diagnosis': 'PCL tear'}]
-'''
 
 ## Routes for saving patients, editing and deleting
 @app.route('/')
@@ -78,8 +63,27 @@ def showDiagnoses(patient_id):
 def newDiagnosis(patient_id):
 	patient = session.query(Patient).filter_by(id = patient_id).one()
 	if request.method == 'POST':
-		newDiagnosis = Diagnosis(name = request.form['diagnosis1'], patient_id = patient.id)
+		newDiagnosis = Diagnosis(patient_id = patient.id, name = request.form['diagnosis1'], name2 = request.form['diagnosis2'], name3 = request.form['diagnosis3'])
 		session.add(newDiagnosis)
+		# flush() to have primary_key (id) field updated into database for the Diagnosis
+		session.flush()
+
+		# add Subjective and Objective data into respective tables
+		# add true or false for pins and needles and numbness depending on if it is checked
+		if request.form.get('pins-needles'):
+			pn_input = True
+		else:
+			pn_input = False
+		if request.form.get('numbness'):
+			nb_input = True
+		else:
+			nb_input = False
+		newSubjective = Subjective(diagnosis_id = newDiagnosis.id, pain = request.form['pain'], pain_description = request.form['pain-description'], pins_needles = pn_input, numbness = nb_input, current_history = request.form['current-history'], aggs = request.form['agg'], ease = request.form['ease'], daily_history = request.form['24hr'], past_history = request.form['past-hx'], social_history = request.form['social-hx'], special_q = request.form['special-q'], comments = request.form['comments'])
+		session.add(newSubjective)
+
+		newObjective = Objective(diagnosis_id = newDiagnosis.id, observation = request.form['observation'], active = request.form['active'], passive = request.form['passive'], strength = request.form['strength'], functional = request.form['functional'], neurological = request.form['neurological'], special_tests = request.form['special-tests'], passive_accessory = request.form['passive-accessory'], palpation = request.form['palpation'], other_tests = request.form['other-tests'])
+		session.add(newObjective)
+
 		session.commit()
 		return redirect(url_for('showDiagnoses', patient_id = patient.id))
 	else:

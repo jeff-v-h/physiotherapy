@@ -29,8 +29,8 @@ class Diagnosis(Base):
 	id = Column(Integer, primary_key=True)
 	patient_id = Column(Integer, ForeignKey('patient.id'), nullable=False)
 	name = Column(String(80), nullable=False)
-	name_two = Column(String(80))
-	name_three = Column(String(80))
+	name2 = Column(String(80))
+	name3 = Column(String(80))
 	
 	subjective = relationship('Subjective', backref='diagnosis', lazy=True)
 	body_chart = relationship('BodyChart', backref='diagnosis', lazy=True)
