@@ -99,6 +99,7 @@ function addDiagnosis() {
 	impressionForm.find('input:last').attr('name', 'diagnosis');
 }*/
 
+/*
 var treatmentForm = $('#treatments').find('form');
 
 function addTreatment() {
@@ -113,9 +114,9 @@ function addPlan() {
 	planForm.find('input:last').attr('name', 'plan');
 	// to add code for adding id
 }
+*/
 
-
-// when submit button clicked, gather all infor from page to send off to confirmation page
+// when submit button clicked, gather all info from page to send off to confirmation page
 function submitForm() {
 
 }

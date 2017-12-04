@@ -3,7 +3,7 @@ app = Flask(__name__)
 
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-from database_setup import Base, Patient, Diagnosis, Treatment
+from database_setup import Base, Patient, Diagnosis, BodyChart, Treatment
 
 engine = create_engine('sqlite:///patientfiles.db')
 Base.metadata.bind = engine
@@ -78,7 +78,7 @@ def showDiagnoses(patient_id):
 def newDiagnosis(patient_id):
 	patient = session.query(Patient).filter_by(id = patient_id).one()
 	if request.method == 'POST':
-		newDiagnosis = Diagnosis(name = request.form['diagnosis'], patient_id = patient.id)
+		newDiagnosis = Diagnosis(name = request.form['diagnosis1'], patient_id = patient.id)
 		session.add(newDiagnosis)
 		session.commit()
 		return redirect(url_for('showDiagnoses', patient_id = patient.id))
@@ -124,7 +124,7 @@ def newTreatment(patient_id, diagnosis_id):
 	patient = session.query(Patient).filter_by(id = patient_id).one()
 	diagnosis = session.query(Diagnosis).filter_by(id = diagnosis_id).one()
 	if request.method == 'POST':
-		newTreatment = Treatment(name = request.form['treatment'], patient_id = patient.id, diagnosis_id = diagnosis.id, description = request.form['comment'])
+		newTreatment = Treatment(name = request.form['treatment1'], diagnosis_id = diagnosis.id, description = request.form['comment'])
 		session.add(newTreatment)
 		session.commit()
 		return redirect(url_for('showTreatments', patient_id = patient.id, diagnosis_id = diagnosis.id))

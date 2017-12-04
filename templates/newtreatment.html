@@ -14,7 +14,7 @@
 			</div>
 		</div>
 		<div id="header">
-			<h1>New treatment</h1>
+			<h1>New Treatment Session</h1>
 		</div>
 		<div id="main">
 			<div>
@@ -26,8 +26,12 @@
 			<form action="{{url_for('newTreatment', patient_id = patient.id, diagnosis_id = diagnosis.id)}}" method="post" id="treatment-form">
 				<section id="treatments">
 					<h2>Treatments Provided</h2>
-					<input type="text" name="treatment" id="treatment1">
-					<br><button id="btn-treatment" onclick="addTreatment()">Add treatment</button>
+					<input type="text" name="treatment1" id="treatment1">
+					<input type="text" name="treatment2" id="treatment1">
+					<input type="text" name="treatment3" id="treatment1">
+					<input type="text" name="treatment4" id="treatment1">
+					<input type="text" name="treatment5" id="treatment1">
+					<!--<br><button type="button" id="btn-treatment" onclick="addTreatment()">Add treatment</button> -->
 				</section>
 				<section id="additional">
 					<h2>Additional Comments</h2>
@@ -36,7 +40,7 @@
 				<section id="plan">
 					<h2>Plan</h2>
 					<input type="text" name="plan" id="plan1">
-					<br><button id="btn-plan" onclick="addPlan()">Add plan</button>
+					<br><button type="button" id="btn-plan" onclick="addPlan()">Add plan</button>
 				</section>
 				<div>
 					<a href="{{ url_for('showTreatments', patient_id = patient.id, diagnosis_id = diagnosis.id) }}"><button>Create</button></a>
