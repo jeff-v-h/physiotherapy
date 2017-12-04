@@ -83,8 +83,16 @@ class Treatment(Base):
 
 	id = Column(Integer, primary_key=True)
 	diagnosis_id = Column(Integer, ForeignKey('diagnosis.id'), nullable=False)
-	name = Column(String(250), nullable=False)
-	description = Column(String(250))
+	treatment1 = Column(String(250), nullable=False)
+	treatment2 = Column(String(250))
+	treatment3 = Column(String(250))
+	treatment4 = Column(String(250))
+	treatment5 = Column(String(250))
+	treatment6 = Column(String(250))
+	treatment7 = Column(String(250))
+	treatment8 = Column(String(250))
+	comments = Column(String(250))
+	plan = Column(String(250))
 	
 
 engine = create_engine('sqlite:///patientfiles.db')

@@ -26,11 +26,14 @@
 			<form action="{{url_for('newTreatment', patient_id = patient.id, diagnosis_id = diagnosis.id)}}" method="post" id="treatment-form">
 				<section id="treatments">
 					<h2>Treatments Provided</h2>
-					<input type="text" name="treatment1" id="treatment1">
-					<input type="text" name="treatment2" id="treatment1">
-					<input type="text" name="treatment3" id="treatment1">
-					<input type="text" name="treatment4" id="treatment1">
-					<input type="text" name="treatment5" id="treatment1">
+					<input type="text" name="treatment1" id="treatment1"><br>
+					<input type="text" name="treatment2" id="treatment1"><br>
+					<input type="text" name="treatment3" id="treatment1"><br>
+					<input type="text" name="treatment4" id="treatment1"><br>
+					<input type="text" name="treatment5" id="treatment1"><br>
+					<input type="text" name="treatment6" id="treatment1"><br>
+					<input type="text" name="treatment7" id="treatment1"><br>
+					<input type="text" name="treatment8" id="treatment1"><br>
 					<!--<br><button type="button" id="btn-treatment" onclick="addTreatment()">Add treatment</button> -->
 				</section>
 				<section id="additional">
@@ -39,8 +42,8 @@
 				</section>
 				<section id="plan">
 					<h2>Plan</h2>
-					<input type="text" name="plan" id="plan1">
-					<br><button type="button" id="btn-plan" onclick="addPlan()">Add plan</button>
+					<textarea name="plan" form="treatment-form" maxlength="250"></textarea>
+					<!--<br><button type="button" id="btn-plan" onclick="addPlan()">Add plan</button>-->
 				</section>
 				<div>
 					<a href="{{ url_for('showTreatments', patient_id = patient.id, diagnosis_id = diagnosis.id) }}"><button>Create</button></a>
