@@ -23,7 +23,7 @@
 			<div>
 				Diagnosis: {{diagnosis.name}}
 			</div>
-			<form action="{{url_for('newTreatment', patient_id = patient.id, diagnosis_id = diagnosis.id)}}" method="post" id="newTreatmentForm">
+			<form action="{{url_for('newTreatment', patient_id = patient.id, diagnosis_id = diagnosis.id)}}" method="post" id="treatment-form">
 				<section id="treatments">
 					<h2>Treatments Provided</h2>
 					<input type="text" name="treatment" id="treatment1">
@@ -31,7 +31,7 @@
 				</section>
 				<section id="additional">
 					<h2>Additional Comments</h2>
-					<textarea name="comment" form="newTreatmentForm"></textarea>
+					<textarea name="comment" form="treatment-form"></textarea>
 				</section>
 				<section id="plan">
 					<h2>Plan</h2>

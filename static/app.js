@@ -92,12 +92,12 @@ function clearCanvas() {
 }
 
 // Add inputs when buttons are clicked
-var impressionForm = $('#impression').find('form');
+/*var impressionForm = $('#impression').find('form');
 
 function addDiagnosis() {
 	impressionForm.append(lineBreak).append(htmlInput);
 	impressionForm.find('input:last').attr('name', 'diagnosis');
-}
+}*/
 
 var treatmentForm = $('#treatments').find('form');
 
