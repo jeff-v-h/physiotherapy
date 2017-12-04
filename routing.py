@@ -35,7 +35,7 @@ def showPatients():
 @app.route('/physiofiles/new/', methods=['GET', 'POST'])
 def newPatient(): 
 	if request.method == 'POST':
-		newPatient = Patient(firstname = request.form['firstname'], lastname = request.form['lastname'])
+		newPatient = Patient(title=request.form['title'], firstname = request.form['firstname'], lastname = request.form['lastname'], birthdate = request.form['dob'], mobile = request.form['mobile'], home_ph = request.form['home-ph'], work_ph = request.form['work-ph'], email = request.form['email'], occupation = request.form['occupation'])
 		session.add(newPatient)
 		session.commit()
 		return redirect(url_for('showPatients'))

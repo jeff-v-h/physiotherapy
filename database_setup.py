@@ -1,6 +1,7 @@
 import os
 import sys
-from sqlalchemy import Column, ForeignKey, Integer, String
+import datetime
+from sqlalchemy import Column, ForeignKey, Integer, String, DateTime, BigInteger, VARCHAR
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
 from sqlalchemy import create_engine
@@ -11,17 +12,25 @@ class Patient(Base):
 	__tablename__ = 'patient'
 
 	id = Column(Integer, primary_key=True)
-	firstname = Column(String(250), nullable=False)
-	lastname = Column(String(250), nullable=False)
+	title = Column(String(4), nullable=False)
+	firstname = Column(String(80), nullable=False)
+	lastname = Column(String(80), nullable=False)
+	birthdate = Column(VARCHAR(10), nullable=False)
+	mobile = Column(BigInteger, unique=True, nullable=False)
+	home_ph = Column(BigInteger)
+	work_ph = Column(BigInteger)
+	email = Column(String(120), unique=True)
+	occupation = Column(String(80))
+	diagnoses = relationship('Diagnosis', backref='patient', lazy='select')
 
 
 class Diagnosis(Base):
 	__tablename__ = 'diagnosis'
 
 	id = Column(Integer, primary_key=True)
-	name = Column(String(250), nullable=False)
-	patient_id = Column(Integer, ForeignKey('patient.id'))
-	patient = relationship(Patient)
+	name = Column(String(80), nullable=False)
+	patient_id = Column(Integer, ForeignKey('patient.id'), nullable=False)
+	treatments = relationship('Treatment', backref='diagnosis', lazy='select')
 
 
 class Treatment(Base):
@@ -30,10 +39,7 @@ class Treatment(Base):
 	id = Column(Integer, primary_key=True)
 	name = Column(String(250), nullable=False)
 	description = Column(String(250))
-	patient_id = Column(Integer, ForeignKey('patient.id'))
-	patient = relationship(Patient)
 	diagnosis_id = Column(Integer, ForeignKey('diagnosis.id'))
-	diagnosis = relationship(Diagnosis)
 
 engine = create_engine('sqlite:///patientfiles.db')
 

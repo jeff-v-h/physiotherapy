@@ -45,11 +45,12 @@ function loadCanvas() {
 	var imgWidth = canvas.width;
 	var imgHeight = canvas.height;
 
+	//img.src = "{{url_for('static', filename='body_chart.png')}}";
+	img.src = "img/body_chart.png"; // THIS NEEDS TO BE FIXED TO WORK WITH PYTHON/FLASK
 	img.onload = function() {
 		context.drawImage(img, x, y, imgWidth, imgHeight);
 	}
-	//img.src = "{{url_for('static', filename='body_chart.png')}}";
-	img.src = "img/body_chart.png"; // THIS NEEDS TO BE FIXED TO WORK WITH PYTHON/FLASK
+	
 }
 loadCanvas();
 
