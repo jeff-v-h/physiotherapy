@@ -27,7 +27,8 @@
 				{% for diagnosis in diagnoses %}
 				<div class="list-item">
 					<div>
-						<a href="{{ url_for('showTreatments', patient_id = patient.id, diagnosis_id = diagnosis.id) }}">{{diagnosis.name}}</a> with id: {{diagnosis.id}}
+						<a href="{{ url_for('showTreatments', patient_id = patient.id, diagnosis_id = diagnosis.id) }}">{{diagnosis.diagnosis1}}</a>{{diagnosis.diagnosis2}}
+						{{diagnosis.diagnosis3}}
 					</div>
 					<div>
 						<a href="{{ url_for('editDiagnosis', patient_id = patient.id, diagnosis_id = diagnosis.id) }}"><button>Edit</button></a>

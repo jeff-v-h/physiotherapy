@@ -3,7 +3,7 @@ app = Flask(__name__)
 
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-from database_setup import Base, Patient, Diagnosis, Subjective, BodyChart, Objective, Treatment
+from database_setup import Base, Patient, Diagnosis, BodyChart, Consultation
 
 engine = create_engine('sqlite:///patientfiles.db')
 Base.metadata.bind = engine
@@ -63,26 +63,25 @@ def showDiagnoses(patient_id):
 def newDiagnosis(patient_id):
 	patient = session.query(Patient).filter_by(id = patient_id).one()
 	if request.method == 'POST':
-		newDiagnosis = Diagnosis(patient_id = patient.id, name = request.form['diagnosis1'], name2 = request.form['diagnosis2'], name3 = request.form['diagnosis3'])
+		# add true or false for pins and needles and numbness depending on if it is checked
+		if request.form.get('pins-needles'):
+			pnInput = True
+		else:
+			pnInput = False
+		if request.form.get('numbness'):
+			nbInput = True
+		else:
+			nbInput = False
+		newDiagnosis = Diagnosis(pain = request.form['pain'], pain_description = request.form['pain-description'], pins_needles = pnInput, numbness = nbInput, current_history = request.form['current-history'], aggs = request.form['agg'], ease = request.form['ease'], daily_history = request.form['24hr'], past_history = request.form['past-hx'], social_history = request.form['social-hx'], special_q = request.form['special-q'], comments = request.form['comments'], diagnosis1 = request.form['diagnosis1'], diagnosis2 = request.form['diagnosis2'], diagnosis3 = request.form['diagnosis3'], patient_id = patient.id)
 		session.add(newDiagnosis)
 		# flush() to have primary_key (id) field updated into database for the Diagnosis
 		session.flush()
-
-		# add Subjective and Objective data into respective tables
-		# add true or false for pins and needles and numbness depending on if it is checked
-		if request.form.get('pins-needles'):
-			pn_input = True
+		if request.form.get('consent'):
+			consentInput = True
 		else:
-			pn_input = False
-		if request.form.get('numbness'):
-			nb_input = True
-		else:
-			nb_input = False
-		newSubjective = Subjective(diagnosis_id = newDiagnosis.id, pain = request.form['pain'], pain_description = request.form['pain-description'], pins_needles = pn_input, numbness = nb_input, current_history = request.form['current-history'], aggs = request.form['agg'], ease = request.form['ease'], daily_history = request.form['24hr'], past_history = request.form['past-hx'], social_history = request.form['social-hx'], special_q = request.form['special-q'], comments = request.form['comments'])
-		session.add(newSubjective)
-
-		newObjective = Objective(diagnosis_id = newDiagnosis.id, observation = request.form['observation'], active = request.form['active'], passive = request.form['passive'], strength = request.form['strength'], functional = request.form['functional'], neurological = request.form['neurological'], special_tests = request.form['special-tests'], passive_accessory = request.form['passive-accessory'], palpation = request.form['palpation'], other_tests = request.form['other-tests'])
-		session.add(newObjective)
+			consentInput = False
+		newConsultation = Consultation(initial = True, observation = request.form['observation'], consent = consentInput, active = request.form['active'], passive = request.form['passive'], strength = request.form['strength'], functional = request.form['functional'], neurological = request.form['neurological'], special_tests = request.form['special-tests'], passive_accessory = request.form['passive-accessory'], palpation = request.form['palpation'], other_tests = request.form['other-tests'], treatments = request.form['treatments'], comments = request.form['treatment-comments'], plan = request.form['plan'], diagnosis_id = newDiagnosis.id)
+		session.add(newConsultation)
 
 		session.commit()
 		return redirect(url_for('showDiagnoses', patient_id = patient.id))

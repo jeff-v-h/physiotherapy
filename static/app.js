@@ -115,8 +115,3 @@ function addPlan() {
 	// to add code for adding id
 }
 */
-
-// when submit button clicked, gather all info from page to send off to confirmation page
-function submitForm() {
-
-}

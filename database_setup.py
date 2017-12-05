@@ -21,6 +21,7 @@ class Patient(Base):
 	work_ph = Column(BigInteger)
 	email = Column(String(120), unique=True)
 	occupation = Column(String(80))
+
 	diagnoses = relationship('Diagnosis', backref='patient', lazy=True)
 
 class Diagnosis(Base):
@@ -28,20 +29,9 @@ class Diagnosis(Base):
 
 	id = Column(Integer, primary_key=True)
 	patient_id = Column(Integer, ForeignKey('patient.id'), nullable=False)
-	name = Column(String(80), nullable=False)
-	name2 = Column(String(80))
-	name3 = Column(String(80))
-	
-	subjective = relationship('Subjective', backref='diagnosis', lazy=True)
-	body_chart = relationship('BodyChart', backref='diagnosis', lazy=True)
-	objective = relationship('Objective', backref='diagnosis', lazy=True)
-	treatments = relationship('Treatment', backref='diagnosis', lazy=True)
-
-class Subjective(Base):
-	__tablename__ = 'subjective'
-
-	id = Column(Integer, primary_key=True)
-	diagnosis_id = Column(Integer, ForeignKey('diagnosis.id'), nullable=False)
+	diagnosis1 = Column(String(80), nullable=False)
+	diagnosis2 = Column(String(80))
+	diagnosis3 = Column(String(80))
 	pain = Column(Integer)
 	pain_description = Column(String(500))
 	pins_needles = Column(Boolean)
@@ -53,46 +43,39 @@ class Subjective(Base):
 	past_history = Column(String(250))
 	social_history = Column(String(250))
 	special_q = Column(String(250))
-	comments = Column(String(250))
+	comments = Column(String(1000))
+
+	body_chart = relationship('BodyChart', backref='diagnosis', lazy=True)
+	consultations = relationship('Consultation', backref='diagnosis', lazy=True)
 
 class BodyChart(Base):
 	__tablename__ = 'body_chart'
 
 	id = Column(Integer, primary_key=True)
+	diagnosis_id = Column(Integer, ForeignKey('diagnosis.id'), nullable=False)
 	body_chart = Column(LargeBinary)
-	diagnosis_id = Column(Integer, ForeignKey('diagnosis.id'), nullable=False)
 
-class Objective(Base):
-	__tablename__ = 'objective'
-
-	id = Column(Integer, primary_key=True)
-	diagnosis_id = Column(Integer, ForeignKey('diagnosis.id'), nullable=False)
-	observation = Column(String(1000))
-	active = Column(String(1000))
-	passive = Column(String(1000))
-	strength = Column(String(1000))
-	functional = Column(String(1000))
-	neurological = Column(String(1000))
-	special_tests = Column(String(1000))
-	passive_accessory = Column(String(1000))
-	palpation = Column(String(1000))
-	other_tests = Column(String(1000))
-
-class Treatment(Base):
-	__tablename__ = 'treatment'
+class Consultation(Base):
+	__tablename__ = 'consultation'
 
 	id = Column(Integer, primary_key=True)
 	diagnosis_id = Column(Integer, ForeignKey('diagnosis.id'), nullable=False)
-	treatment1 = Column(String(250), nullable=False)
-	treatment2 = Column(String(250))
-	treatment3 = Column(String(250))
-	treatment4 = Column(String(250))
-	treatment5 = Column(String(250))
-	treatment6 = Column(String(250))
-	treatment7 = Column(String(250))
-	treatment8 = Column(String(250))
-	comments = Column(String(250))
-	plan = Column(String(250))
+	initial = Column(Boolean)
+	subjective = Column(String(1000))
+	observation = Column(String(500))
+	consent = Column(Boolean)
+	active = Column(String(500))
+	passive = Column(String(500))
+	strength = Column(String(500))
+	functional = Column(String(500))
+	neurological = Column(String(500))
+	special_tests = Column(String(500))
+	passive_accessory = Column(String(500))
+	palpation = Column(String(500))
+	other_tests = Column(String(500))
+	treatments = Column(String(1000), nullable=False)
+	comments = Column(String(1000))
+	plan = Column(String(500))
 	
 
 engine = create_engine('sqlite:///patientfiles.db')
