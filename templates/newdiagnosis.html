@@ -15,11 +15,14 @@
 			</div>
 		</div>
 		<div id="header">
-			<h1>New Diagnosis</h1>
+			<h1>New Episode</h1>
 		</div>
 		<div id="main">
 			<div>	
 				Patient: {{patient.firstname}} {{patient.lastname}}
+				<div id="top-buttons">
+					<a href="{{ url_for('showDiagnoses', patient_id = patient.id) }}"><button>Back</button></a>
+				</div>
 			</div>
 			<form action="{{url_for('newDiagnosis', patient_id = patient.id)}}" method="post" id="diagnosis-form">
 					<section id="subjective">
@@ -157,7 +160,6 @@
 		</div>
 	</div>
 	<script type="text/javascript" src="{{ url_for('static', filename='jquery-3.2.1.min.js') }}"></script>
-	<script type="text/javascript" src="{{ url_for('static', filename='helper.js') }}"></script>
 	<script type="text/javascript" src="{{ url_for('static', filename='app.js') }}"></script>
 </body>
 </html>

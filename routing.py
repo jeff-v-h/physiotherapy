@@ -4,6 +4,7 @@ app = Flask(__name__)
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from database_setup import Base, Patient, Diagnosis, BodyChart, Consultation
+from datetime import date
 
 engine = create_engine('sqlite:///patientfiles.db')
 Base.metadata.bind = engine
@@ -20,7 +21,7 @@ def showPatients():
 @app.route('/physiofiles/new/', methods=['GET', 'POST'])
 def newPatient(): 
 	if request.method == 'POST':
-		newPatient = Patient(title=request.form['title'], firstname = request.form['firstname'], lastname = request.form['lastname'], birthdate = request.form['dob'], mobile = request.form['mobile'], home_ph = request.form['home-ph'], work_ph = request.form['work-ph'], email = request.form['email'], occupation = request.form['occupation'])
+		newPatient = Patient(date_started = request.form['date'], title=request.form['title'], firstname = request.form['firstname'], lastname = request.form['lastname'], birthdate = request.form['dob'], mobile = request.form['mobile'], home_ph = request.form['home-ph'], work_ph = request.form['work-ph'], email = request.form['email'], occupation = request.form['occupation'])
 		session.add(newPatient)
 		session.commit()
 		return redirect(url_for('showPatients'))
@@ -32,11 +33,19 @@ def editPatient(patient_id):
 	patientToEdit = session.query(Patient).filter_by(id = patient_id).one()
 	if request.method == 'POST':
 		if request.form['firstname'] and request.form['lastname']:
+			patientToEdit.date_started = request.form['date']
+			patientToEdit.title = request.form['title']
 			patientToEdit.firstname = request.form['firstname']
 			patientToEdit.lastname = request.form['lastname']
+			patientToEdit.birthdate = request.form['dob']
+			patientToEdit.mobile = request.form['mobile']
+			patientToEdit.home_ph = request.form['home-ph']
+			patientToEdit.work_ph = request.form['work-ph']
+			patientToEdit.email = request.form['email']
+			patientToEdit.occupation = request.form['occupation']
 		session.add(patientToEdit)
 		session.commit()
-		return redirect(url_for('showPatients'))
+		return redirect(url_for('showDiagnoses', patient_id = patientToEdit.id))
 	else:
 		return render_template('editpatient.html', patient = patientToEdit)
 

@@ -1,7 +1,7 @@
 import os
 import sys
 import datetime
-from sqlalchemy import Column, ForeignKey, Integer, String, BigInteger, VARCHAR, LargeBinary, Boolean
+from sqlalchemy import Column, ForeignKey, Integer, String, BigInteger, Date, LargeBinary, Boolean
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
 from sqlalchemy import create_engine
@@ -12,10 +12,11 @@ class Patient(Base):
 	__tablename__ = 'patient'
 
 	id = Column(Integer, primary_key=True)
+	date_started = Column(String(10))
 	title = Column(String(4), nullable=False)
 	firstname = Column(String(80), nullable=False)
 	lastname = Column(String(80), nullable=False)
-	birthdate = Column(VARCHAR(10), nullable=False)
+	birthdate = Column(String(10), nullable=False)
 	mobile = Column(BigInteger, unique=True, nullable=False)
 	home_ph = Column(BigInteger)
 	work_ph = Column(BigInteger)

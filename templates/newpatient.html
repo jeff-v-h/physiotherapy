@@ -23,7 +23,7 @@
 				<form action="{{url_for('newPatient')}}" method="post">
 					<div>
 						<label for="date">Date:</label>
-						<input type="date" name="date" id="date" class="required">
+						<input type="date" name="date" id="date">
 					</div>
 					<div>
 						<label>Title:</label>
@@ -45,10 +45,6 @@
 					<div>
 						<label for="dob">Date of Birth:</label>
 						<input type="date" name="dob" id="dob">
-					</div>
-					<div>
-						<label>Age:</label>
-						<input type="text" name="age" id="age">
 					</div>
 					<div>
 						<label for="mobile">Mobile #:</label>
@@ -82,7 +78,6 @@
 		<p>Copyright</p>
 	</footer>
 	<script type="text/javascript" src="{{ url_for('static', filename='jquery-3.2.1.min.js') }}"></script>
-	<script type="text/javascript" src="{{ url_for('static', filename='helper.js') }}"></script>
 	<script type="text/javascript" src="{{ url_for('static', filename='app.js') }}"></script>
 </body>
 </html>

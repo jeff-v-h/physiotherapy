@@ -14,16 +14,43 @@
 			</div>
 		</div>
 		<div id="header">
-			<h1>Diagnoses</h1>
+			<h1>Patient Information</h1>
 		</div>
 		<div id="main">
 			<div>
 				Patient: {{patient.firstname}} {{patient.lastname}}
 			</div>
+			<div id="top-buttons">
+				<div>
+					<a href="{{ url_for('editPatient', patient_id = patient.id) }}"><button>Edit</button></a>
+				</div>
+				<div>
+					<a href="{{ url_for('deletePatient', patient_id = patient.id) }}"><button>Delete</button></a>
+				</div>
+				<div>
+					<a href="{{ url_for('newDiagnosis', patient_id = patient.id) }}"><button>New Episode</button></a>
+				</div>
+				<div>
+					<a href="{{ url_for('showPatients', patient_id = patient.id) }}"><button>Back</button></a>
+				</div>
+			</div>
 			<div>
-				<a href="{{ url_for('newDiagnosis', patient_id = patient.id) }}"><button>New Diagnosis</button></a>
+				<h3>Patient Information</h3>
+				<div>
+					Date Started: {{patient.date_started}}<br>
+					Title: {{patient.title}}<br>
+					First Name: {{patient.firstname}}<br>
+					Last Name: {{patient.lastname}}<br>
+					Date of Birth: {{patient.birthdate}} (year-month-day)<br>
+					Mobile: {{patient.mobile}}<br>
+					Home Phone: {{patient.home_ph}}<br>
+					Work Phone: {{patient.work_ph}}<br>
+					E-mail: {{patient.email}}<br>
+					Occupation: {{patient.occupation}}<br>
+				</div>
 			</div>
 			<div id="list">
+				<h3>Injury Episodes</h3>
 				{% for diagnosis in diagnoses %}
 				<div class="list-item">
 					<div>
