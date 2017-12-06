@@ -10,7 +10,7 @@
 	<div id="content">
 		<div id="topbar">
 			<div>
-				<a href="{{url_for('showPatients')}}">Home</a>
+				<a href="{{url_for('patientList')}}">Home</a>
 			</div>
 		</div>
 		<div id="header">
@@ -29,7 +29,7 @@
 				& {{diagnosis.diagnosis3}}<br>
 				{% endif %}
 			</div>
-			<form action="{{url_for('newTreatment', patient_id = patient.id, diagnosis_id = diagnosis.id)}}" method="post" id="consult-form">
+			<form action="{{url_for('newConsult', patient_id = patient.id, diagnosis_id = diagnosis.id)}}" method="post" id="consult-form">
 				<section>
 					<h2>Subjective</h2>
 					<textarea name="subjective" form="consult-form" maxlength="500"></textarea>
@@ -102,7 +102,7 @@
 				</section>
 			</form>
 			<div>
-				<a href="{{ url_for('showTreatments', patient_id = patient.id, diagnosis_id = diagnosis.id) }}"><button>Cancel</button></a>
+				<a href="{{ url_for('episodeInfo', patient_id = patient.id, diagnosis_id = diagnosis.id) }}"><button>Cancel</button></a>
 			</div>
 		</div>
 	</div>

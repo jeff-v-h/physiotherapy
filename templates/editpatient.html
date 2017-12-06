@@ -10,7 +10,7 @@
 	<div id="content">
 		<div id="topbar">
 			<div>
-				<a href="{{url_for('showPatients')}}">Home</a>
+				<a href="{{url_for('patientList')}}">Home</a>
 			</div>
 		</div>
 		<div id="header">
@@ -83,7 +83,7 @@
 				</div>
 			</form>
 			<div>
-				<a href="{{ url_for('showDiagnoses', patient_id = patient.id) }}"><button>Cancel</button></a>
+				<a href="{{ url_for('patientInfo', patient_id = patient.id) }}"><button>Cancel</button></a>
 			</div>
 		</div>
 	</div>

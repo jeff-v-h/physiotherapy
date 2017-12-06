@@ -10,18 +10,18 @@
 	<div id="content">
 		<div id="topbar">
 			<div>
-				<a href="{{url_for('showPatients')}}">Home</a>
+				<a href="{{url_for('patientList')}}">Home</a>
 			</div>
 		</div>
 		<div id="header">
-			<h1>Patient Information</h1>
+			<h1>Patient File</h1>
 		</div>
 		<div id="main">
 			<div>
 				Patient: {{patient.firstname}} {{patient.lastname}}
 			</div>
 			<div>
-				<a href="{{ url_for('showPatients') }}"><button>Back</button></a>
+				<a href="{{ url_for('patientList') }}"><button>Back</button></a>
 			</div>
 			<div>
 				<h3>Patient Information</h3>
@@ -47,13 +47,13 @@
 			<div>
 				<h3>Injury Episodes</h3>
 				<div>
-					<a href="{{ url_for('newDiagnosis', patient_id = patient.id) }}"><button>New Episode</button></a>
+					<a href="{{ url_for('newEpisode', patient_id = patient.id) }}"><button>New Episode</button></a>
 				</div>
 				<div id="list">
 					{% for diagnosis in diagnoses %}
 					<div class="list-item">
 						<div>
-							<a href="{{ url_for('showTreatments', patient_id = patient.id, diagnosis_id = diagnosis.id) }}">{{diagnosis.diagnosis1}}</a><br>
+							<a href="{{ url_for('episodeInfo', patient_id = patient.id, diagnosis_id = diagnosis.id) }}">{{diagnosis.diagnosis1}}</a><br>
 							{% if diagnosis.diagnosis2 %}
 							Additional coinciding injuries: {{diagnosis.diagnosis2}} 
 							{% endif %}

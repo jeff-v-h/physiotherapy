@@ -10,7 +10,7 @@
 	<div id="content">
 		<div id="topbar">
 			<div>
-				<a href="{{url_for('showPatients')}}">Home</a>
+				<a href="{{url_for('patientList')}}">Home</a>
 			</div>
 		</div>
 		<div id="header">
@@ -30,7 +30,7 @@
 				{% endif %}
 			</div>
 			<div>
-				<a href="{{ url_for('showDiagnoses', patient_id = patient.id) }}"><button>Back</button></a>
+				<a href="{{ url_for('patientInfo', patient_id = patient.id) }}"><button>Back</button></a>
 			</div>
 			<div>
 				<h3>Diagnosis Information</h3>
@@ -52,22 +52,22 @@
 					Comments: {{diagnosis.comments}}<br>
 				</div>
 				<div>
-					<a href="{{ url_for('editDiagnosis', patient_id = patient.id, diagnosis_id = diagnosis.id) }}"><button>Edit</button></a>
+					<a href="{{ url_for('editEpisode', patient_id = patient.id, diagnosis_id = diagnosis.id) }}"><button>Edit</button></a>
 				</div>
 				<div>
-					<a href="{{ url_for('deleteDiagnosis', patient_id = patient.id, diagnosis_id = diagnosis.id) }}"><button>Delete</button></a>
+					<a href="{{ url_for('deleteEpisode', patient_id = patient.id, diagnosis_id = diagnosis.id) }}"><button>Delete</button></a>
 				</div>
 			</div>
 			<div>
 				<h3>Consultations & Treatments Provided</h3>
 				<div>
-					<a href="{{ url_for('newTreatment', patient_id = patient.id, diagnosis_id = diagnosis.id) }}"><button>New Treatment</button></a>
+					<a href="{{ url_for('newConsult', patient_id = patient.id, diagnosis_id = diagnosis.id) }}"><button>New Treatment</button></a>
 				</div>
 				<div id="list">
 					{% for consult in consults %}
 					<div class="list-item">
 						<div>
-							<a href="{{ url_for('showTreatmentInfo', patient_id = patient.id, diagnosis_id = diagnosis.id, treatment_id = consult.id) }}">Consult id: {{consult.id}}</a><br>
+							<a href="{{ url_for('consultInfo', patient_id = patient.id, diagnosis_id = diagnosis.id, treatment_id = consult.id) }}">Consult id: {{consult.id}}</a><br>
 						</div>
 					</div>
 					{% endfor %}

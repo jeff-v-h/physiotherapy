@@ -10,7 +10,7 @@
 	<div id="content">
 		<div id="topbar">
 			<div>
-				<a href="{{url_for('showPatients')}}">Home</a>
+				<a href="{{url_for('patientList')}}">Home</a>
 			</div>
 		</div>
 		<div id="header">
@@ -33,9 +33,9 @@
 				Consult id: {{consult.id}}
 			</div>
 			<div>
-				<a href="{{ url_for('showTreatmentInfo', patient_id = patient.id, diagnosis_id = diagnosis.id, treatment_id = consult.id) }}"><button>Back</button></a>
+				<a href="{{ url_for('consultInfo', patient_id = patient.id, diagnosis_id = diagnosis.id, treatment_id = consult.id) }}"><button>Back</button></a>
 			</div>
-			<form action="{{url_for('editTreatment', patient_id = patient.id, diagnosis_id = diagnosis.id, treatment_id = consult.id)}}" method="post" id="edit-consult-form">
+			<form action="{{url_for('editConsult', patient_id = patient.id, diagnosis_id = diagnosis.id, treatment_id = consult.id)}}" method="post" id="edit-consult-form">
 				<section>
 					<h2>Subjective</h2>
 					<textarea name="subjective" form="edit-consult-form" maxlength="500">{{consult.subjective}}</textarea>
@@ -112,7 +112,7 @@
 				</div>
 			</form>
 			<div>
-				<a href="{{ url_for('showTreatmentInfo', patient_id = patient.id, diagnosis_id = diagnosis.id, treatment_id = consult.id) }}"><button>Cancel</button></a>
+				<a href="{{ url_for('consultInfo', patient_id = patient.id, diagnosis_id = diagnosis.id, treatment_id = consult.id) }}"><button>Cancel</button></a>
 			</div>
 		</div>
 	</div>

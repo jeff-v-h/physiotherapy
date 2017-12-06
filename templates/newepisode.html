@@ -11,7 +11,7 @@
 	<div id="content">
 		<div id="topbar">
 			<div>
-				<a href="{{url_for('showPatients')}}">Home</a>
+				<a href="{{url_for('patientList')}}">Home</a>
 			</div>
 		</div>
 		<div id="header">
@@ -21,10 +21,10 @@
 			<div>	
 				Patient: {{patient.firstname}} {{patient.lastname}}
 				<div id="top-buttons">
-					<a href="{{ url_for('showDiagnoses', patient_id = patient.id) }}"><button>Back</button></a>
+					<a href="{{ url_for('patientInfo', patient_id = patient.id) }}"><button>Back</button></a>
 				</div>
 			</div>
-			<form action="{{url_for('newDiagnosis', patient_id = patient.id)}}" method="post" id="diagnosis-form">
+			<form action="{{url_for('newEpisode', patient_id = patient.id)}}" method="post" id="episode-form">
 				<section id="subjective">
 					<h2>Subjective Examination</h2>
 					<div id="body-chart">
@@ -46,7 +46,7 @@
 						<label for="pain">Pain Scale:</label>
 						<input type="number" name="pain" min="0" max="10" id="pain">
 						<p>Pain description:</p>
-						<textarea name="pain-description" form="diagnosis-form" maxlength="500"></textarea>
+						<textarea name="pain-description" form="episode-form" maxlength="500"></textarea>
 						<label for="pins-needles">Pins & needles</label>
 						<input type="checkbox" name="pins-needles" id="pins-needles"><br>
 						<label for="numbness">Numbness</label>
@@ -55,35 +55,35 @@
 					<div class="flex-container">
 						<div>
 							<h4>Current History</h4>
-							<textarea name="current-history" form="diagnosis-form" maxlength="1000">Mechanism of Injury:</textarea>
+							<textarea name="current-history" form="episode-form" maxlength="1000">Mechanism of Injury:</textarea>
 						</div>
 						<div>
 							<h4>Aggravating Factors</h4>
-							<textarea name="agg" form="diagnosis-form" maxlength="250"></textarea>
+							<textarea name="agg" form="episode-form" maxlength="250"></textarea>
 						</div>
 						<div>
 							<h4>Easing Factors</h4>
-							<textarea name="ease" form="diagnosis-form" maxlength="250"></textarea>
+							<textarea name="ease" form="episode-form" maxlength="250"></textarea>
 						</div>
 						<div>
 							<h4>24 Hour History</h4>
-							<textarea name="24hr" form="diagnosis-form" maxlength="250"></textarea>
+							<textarea name="24hr" form="episode-form" maxlength="250"></textarea>
 						</div>
 						<div>
 							<h4>Past History</h4>
-							<textarea name="past-hx" form="diagnosis-form" maxlength="250"></textarea>
+							<textarea name="past-hx" form="episode-form" maxlength="250"></textarea>
 						</div>
 						<div>
 							<h4>Social & Family History</h4>
-							<textarea name="social-hx" form="diagnosis-form" maxlength="250"></textarea>
+							<textarea name="social-hx" form="episode-form" maxlength="250"></textarea>
 						</div>
 						<div>
 							<h4>Special Questions</h4>
-							<textarea name="special-q" form="diagnosis-form" maxlength="250"></textarea>
+							<textarea name="special-q" form="episode-form" maxlength="250"></textarea>
 						</div>
 						<div>
 							<h4>Additional Comments</h4>
-							<textarea name="comments" form="diagnosis-form" maxlength="1000"></textarea>
+							<textarea name="comments" form="episode-form" maxlength="1000"></textarea>
 						</div>
 					</div>
 				</section>
@@ -96,43 +96,43 @@
 					<div class="flex-container">
 						<div>
 							<h4>Observation</h4>
-							<textarea name="observation" form="diagnosis-form" maxlength="500"></textarea>
+							<textarea name="observation" form="episode-form" maxlength="500"></textarea>
 						</div>
 						<div>
 							<h4>Active Movements</h4>
-							<textarea name="active" form="diagnosis-form" maxlength="500"></textarea>
+							<textarea name="active" form="episode-form" maxlength="500"></textarea>
 						</div>
 						<div>
 							<h4>Passive Movements</h4>
-							<textarea name="passive" form="diagnosis-form" maxlength="500"></textarea>
+							<textarea name="passive" form="episode-form" maxlength="500"></textarea>
 						</div>
 						<div>
 							<h4>Strength Tests</h4>
-							<textarea name="strength" form="diagnosis-form" maxlength="500"></textarea>
+							<textarea name="strength" form="episode-form" maxlength="500"></textarea>
 						</div>
 						<div>
 							<h4>Functional Tests</h4>
-							<textarea name="functional" form="diagnosis-form" maxlength="500"></textarea>
+							<textarea name="functional" form="episode-form" maxlength="500"></textarea>
 						</div>
 						<div>
 							<h4>Neurological Tests</h4>
-							<textarea name="neurological" form="diagnosis-form" maxlength="500"></textarea>
+							<textarea name="neurological" form="episode-form" maxlength="500"></textarea>
 						</div>
 						<div>
 							<h4>Special Tests</h4>
-							<textarea name="special-tests" form="diagnosis-form" maxlength="500"></textarea>
+							<textarea name="special-tests" form="episode-form" maxlength="500"></textarea>
 						</div>
 						<div>
 							<h4>Passive Accessory Movements</h4>
-							<textarea name="passive-accessory" form="diagnosis-form" maxlength="500"></textarea>
+							<textarea name="passive-accessory" form="episode-form" maxlength="500"></textarea>
 						</div>
 						<div>
 							<h4>Palpation</h4>
-							<textarea name="palpation" form="diagnosis-form" maxlength="500"></textarea>
+							<textarea name="palpation" form="episode-form" maxlength="500"></textarea>
 						</div>
 						<div>
 							<h4>Other Tests/Comments</h4>
-							<textarea name="other-tests" form="diagnosis-form" maxlength="500"></textarea>
+							<textarea name="other-tests" form="episode-form" maxlength="500"></textarea>
 						</div>
 					</div>
 				</section>
@@ -144,18 +144,18 @@
 				</section>
 				<section>
 					<h2>Treatment</h2>
-					<textarea name="treatments" form="diagnosis-form" maxlength="1000"></textarea>
+					<textarea name="treatments" form="episode-form" maxlength="1000"></textarea>
 					<h4>Comments</h4>
-					<textarea name="treatment-comments" form="diagnosis-form" maxlength="1000"></textarea>
+					<textarea name="treatment-comments" form="episode-form" maxlength="1000"></textarea>
 					<h4>Plan</h4>
-					<textarea name="plan" form="diagnosis-form" maxlength="500"></textarea>
+					<textarea name="plan" form="episode-form" maxlength="500"></textarea>
 				</section>
 				<div>
-					<a href="{{ url_for('showDiagnoses', patient_id = patient.id) }}"><button>Create</button></a>
+					<button>Create</button>
 				</div>
 			</form>
 			<div>
-				<a href="{{ url_for('showDiagnoses', patient_id = patient.id) }}"><button>Cancel</button></a>
+				<a href="{{ url_for('patientInfo', patient_id = patient.id) }}"><button>Cancel</button></a>
 			</div>
 		</div>
 	</div>

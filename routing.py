@@ -14,9 +14,9 @@ session = DBSession()
 ## Routes for saving patients, editing and deleting
 @app.route('/')
 @app.route('/physiofiles/')
-def showPatients():
+def patientList():
 	patientList = session.query(Patient).all()
-	return render_template('patients.html', patients = patientList)
+	return render_template('patientlist.html', patients = patientList)
 
 @app.route('/physiofiles/new/', methods=['GET', 'POST'])
 def newPatient(): 
@@ -24,16 +24,16 @@ def newPatient():
 		newPatient = Patient(date_started = request.form['date'], title=request.form['title'], firstname = request.form['firstname'], lastname = request.form['lastname'], birthdate = request.form['dob'], mobile = request.form['mobile'], home_ph = request.form['home-ph'], work_ph = request.form['work-ph'], email = request.form['email'], occupation = request.form['occupation'])
 		session.add(newPatient)
 		session.commit()
-		return redirect(url_for('showPatients'))
+		return redirect(url_for('patientList'))
 	else:
 		return render_template('newpatient.html')
 
 @app.route('/physiofiles/<int:patient_id>/')
 @app.route('/physiofiles/<int:patient_id>/diagnoses/')
-def showDiagnoses(patient_id):
+def patientInfo(patient_id):
 	diagnosesForPatient = session.query(Diagnosis).filter_by(patient_id = patient_id).all()
 	patient = session.query(Patient).filter_by(id = patient_id).one()
-	return render_template('diagnoses.html', patient = patient, diagnoses = diagnosesForPatient)
+	return render_template('patientinfo.html', patient = patient, diagnoses = diagnosesForPatient)
 
 @app.route('/physiofiles/<int:patient_id>/edit/', methods=['GET', 'POST'])
 def editPatient(patient_id):
@@ -54,7 +54,7 @@ def editPatient(patient_id):
 			session.commit()
 		else:
 			print "fields required: firstname, lastname, date of birth and mobile"
-		return redirect(url_for('showDiagnoses', patient_id = patientToEdit.id))
+		return redirect(url_for('patientInfo', patient_id = patientToEdit.id))
 	else:
 		return render_template('editpatient.html', patient = patientToEdit)
 
@@ -64,14 +64,14 @@ def deletePatient(patient_id):
 	if request.method == 'POST':
 		session.delete(patientToDelete)
 		session.commit()
-		return redirect(url_for('showPatients'))
+		return redirect(url_for('patientList'))
 	else:
 		return render_template('deletepatient.html', patient = patientToDelete)
 
 
 ## Diagnoses/episodes
 @app.route('/physiofiles/<int:patient_id>/diagnoses/new/', methods=['GET', 'POST'])
-def newDiagnosis(patient_id):
+def newEpisode(patient_id):
 	patient = session.query(Patient).filter_by(id = patient_id).one()
 	if request.method == 'POST':
 		# add true or false for pins and needles and numbness depending on if it is checked
@@ -95,20 +95,20 @@ def newDiagnosis(patient_id):
 		session.add(newConsultation)
 
 		session.commit()
-		return redirect(url_for('showTreatments', patient_id = patient.id, diagnosis_id = newDiagnosis.id))
+		return redirect(url_for('episodeInfo', patient_id = patient.id, diagnosis_id = newDiagnosis.id))
 	else:
-		return render_template('newdiagnosis.html', patient = patient)
+		return render_template('newepisode.html', patient = patient)
 
 @app.route('/physiofiles/<int:patient_id>/diagnoses/<int:diagnosis_id>/')
 @app.route('/physiofiles/<int:patient_id>/diagnoses/<int:diagnosis_id>/treatments/')
-def showTreatments(patient_id, diagnosis_id):
+def episodeInfo(patient_id, diagnosis_id):
 	patient = session.query(Patient).filter_by(id = patient_id).one()
 	diagnosis = session.query(Diagnosis).filter_by(id = diagnosis_id).one()
 	consults = session.query(Consultation).filter_by(diagnosis_id = diagnosis_id).all()
-	return render_template('treatments.html', patient = patient, diagnosis = diagnosis, consults = consults)
+	return render_template('episodeinfo.html', patient = patient, diagnosis = diagnosis, consults = consults)
 
 @app.route('/physiofiles/<int:patient_id>/diagnoses/<int:diagnosis_id>/edit/', methods=['GET', 'POST'])
-def editDiagnosis(patient_id, diagnosis_id):
+def editEpisode(patient_id, diagnosis_id):
 	patient = session.query(Patient).filter_by(id = patient_id).one()
 	diagnosisToEdit = session.query(Diagnosis).filter_by(id = diagnosis_id).one()
 	if request.method == 'POST':
@@ -141,12 +141,12 @@ def editDiagnosis(patient_id, diagnosis_id):
 			session.commit()
 		else:
 			print "fields required: diagnosis1 and current history"
-		return redirect(url_for('showTreatments', patient_id = patient.id, diagnosis_id = diagnosisToEdit.id))
+		return redirect(url_for('episodeInfo', patient_id = patient.id, diagnosis_id = diagnosisToEdit.id))
 	else:
-		return render_template('editdiagnosis.html', patient = patient, diagnosis = diagnosisToEdit)
+		return render_template('editepisode.html', patient = patient, diagnosis = diagnosisToEdit)
 
 @app.route('/physiofiles/<int:patient_id>/diagnoses/<int:diagnosis_id>/delete/', methods=['GET', 'POST'])
-def deleteDiagnosis(patient_id, diagnosis_id):
+def deleteEpisode(patient_id, diagnosis_id):
 	patient = session.query(Patient).filter_by(id = patient_id).one()
 	diagnosisToDelete = session.query(Diagnosis).filter_by(id = diagnosis_id).one()
 	associatedConsults = session.query(Consultation).filter_by(diagnosis_id = diagnosis_id).all()
@@ -155,14 +155,14 @@ def deleteDiagnosis(patient_id, diagnosis_id):
 		for consult in associatedConsults:
 			session.delete(consult)
 		session.commit()
-		return redirect(url_for('showDiagnoses', patient_id = patient.id))
+		return redirect(url_for('patientInfo', patient_id = patient.id))
 	else:
-		return render_template('deletediagnosis.html', patient = patient, diagnosis = diagnosisToDelete)
+		return render_template('deleteepisode.html', patient = patient, diagnosis = diagnosisToDelete)
 
 
 ##New, Edit and delete treatment pages
 @app.route('/physiofiles/<int:patient_id>/diagnoses/<int:diagnosis_id>/treatments/new/', methods=['GET', 'POST'])
-def newTreatment(patient_id, diagnosis_id):
+def newConsult(patient_id, diagnosis_id):
 	patient = session.query(Patient).filter_by(id = patient_id).one()
 	diagnosis = session.query(Diagnosis).filter_by(id = diagnosis_id).one()
 	if request.method == 'POST':
@@ -173,19 +173,19 @@ def newTreatment(patient_id, diagnosis_id):
 		newConsult = Consultation(diagnosis_id = diagnosis.id, initial = False, subjective = request.form['subjective'], observation = request.form['observation'], consent = consentInput, active = request.form['active'], passive = request.form['passive'], strength = request.form['strength'], functional = request.form['functional'], neurological = request.form['neurological'], special_tests = request.form['special-tests'], passive_accessory = request.form['passive-accessory'], palpation = request.form['palpation'], other_tests = request.form['other-tests'], treatments = request.form['treatments'], comments = request.form['treatment-comments'], plan = request.form['plan'])
 		session.add(newConsult)
 		session.commit()
-		return redirect(url_for('showTreatments', patient_id = patient.id, diagnosis_id = diagnosis.id))
+		return redirect(url_for('episodeInfo', patient_id = patient.id, diagnosis_id = diagnosis.id))
 	else:
-		return render_template('newtreatment.html', patient = patient, diagnosis = diagnosis)
+		return render_template('newconsult.html', patient = patient, diagnosis = diagnosis)
 
 @app.route('/physiofiles/<int:patient_id>/diagnoses/<int:diagnosis_id>/treatments/<int:treatment_id>/')
-def showTreatmentInfo(patient_id, diagnosis_id, treatment_id):
+def consultInfo(patient_id, diagnosis_id, treatment_id):
 	patient = session.query(Patient).filter_by(id = patient_id).one()
 	diagnosis = session.query(Diagnosis).filter_by(id = diagnosis_id).one()
 	consult = session.query(Consultation).filter_by(id = treatment_id).one()
-	return render_template('showtreatmentinfo.html', patient = patient, diagnosis = diagnosis, consult = consult)
+	return render_template('consultinfo.html', patient = patient, diagnosis = diagnosis, consult = consult)
 
 @app.route('/physiofiles/<int:patient_id>/diagnoses/<int:diagnosis_id>/treatments/<int:treatment_id>/edit/', methods=['GET', 'POST'])
-def editTreatment(patient_id, diagnosis_id, treatment_id):
+def editConsult(patient_id, diagnosis_id, treatment_id):
 	patient = session.query(Patient).filter_by(id = patient_id).one()
 	diagnosis = session.query(Diagnosis).filter_by(id = diagnosis_id).one()
 	consultToEdit = session.query(Consultation).filter_by(id = treatment_id).one()
@@ -212,21 +212,21 @@ def editTreatment(patient_id, diagnosis_id, treatment_id):
 			consultToEdit.plan = request.form['plan']
 			session.add(consultToEdit)
 			session.commit()
-		return redirect(url_for('showTreatmentInfo', patient_id = patient.id, diagnosis_id = diagnosis.id, treatment_id = consultToEdit.id))
+		return redirect(url_for('consultInfo', patient_id = patient.id, diagnosis_id = diagnosis.id, treatment_id = consultToEdit.id))
 	else:
-		return render_template('edittreatment.html', patient = patient, diagnosis = diagnosis, consult = consultToEdit)
+		return render_template('editconsult.html', patient = patient, diagnosis = diagnosis, consult = consultToEdit)
 
 @app.route('/physiofiles/<int:patient_id>/diagnoses/<int:diagnosis_id>/treatments/<int:treatment_id>/delete/', methods=['GET', 'POST'])
-def deleteTreatment(patient_id, diagnosis_id, treatment_id):
+def deleteConsult(patient_id, diagnosis_id, treatment_id):
 	patient = session.query(Patient).filter_by(id = patient_id).one()
 	diagnosis = session.query(Diagnosis).filter_by(id = diagnosis_id).one()
 	consultToDelete = session.query(Consultation).filter_by(id = treatment_id).one()
 	if request.method == 'POST':
 		session.delete(consultToDelete)
 		session.commit()
-		return redirect(url_for('showTreatments', patient_id = patient.id, diagnosis_id = diagnosis.id))
+		return redirect(url_for('episodeInfo', patient_id = patient.id, diagnosis_id = diagnosis.id))
 	else:
-		return render_template('deletetreatment.html', patient = patient, diagnosis = diagnosis, consult = consultToDelete)
+		return render_template('deleteconsult.html', patient = patient, diagnosis = diagnosis, consult = consultToDelete)
 
 
 ## For running website on localhost:5000 in debug mode (automatic refresh of webserver on file save)

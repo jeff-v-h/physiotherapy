@@ -10,7 +10,7 @@
 	<div id="content">
 		<div id="topbar">
 			<div>
-				<a href="{{url_for('showPatients')}}">Home</a>
+				<a href="{{url_for('patientList')}}">Home</a>
 			</div>
 		</div>
 		<div id="header">
@@ -24,7 +24,7 @@
 				{% for patient in patients %}
 				<div class="list-item">
 					<div>
-						<a href="{{ url_for('showDiagnoses', patient_id = patient.id) }}">{{patient.firstname}} {{patient.lastname}}</a> with id: {{patient.id}}
+						<a href="{{ url_for('patientInfo', patient_id = patient.id) }}">{{patient.firstname}} {{patient.lastname}}</a> with id: {{patient.id}}
 					</div>
 				</div>
 				{% endfor %}
