@@ -166,8 +166,12 @@ def newTreatment(patient_id, diagnosis_id):
 	patient = session.query(Patient).filter_by(id = patient_id).one()
 	diagnosis = session.query(Diagnosis).filter_by(id = diagnosis_id).one()
 	if request.method == 'POST':
-		newTreatment = Treatment(diagnosis_id = diagnosis.id, treatment1 = request.form['treatment1'], treatment2 = request.form['treatment2'], treatment3 = request.form['treatment3'], treatment4 = request.form['treatment4'], treatment5 = request.form['treatment5'], treatment6 = request.form['treatment1'], treatment7 = request.form['treatment7'], treatment8 = request.form['treatment8'], comments = request.form['comment'])
-		session.add(newTreatment)
+		if request.form.get('consent'):
+			consentInput = True
+		else:
+			consentInput = False
+		newConsult = Consultation(diagnosis_id = diagnosis.id, initial = False, subjective = request.form['subjective'], observation = request.form['observation'], consent = consentInput, active = request.form['active'], passive = request.form['passive'], strength = request.form['strength'], functional = request.form['functional'], neurological = request.form['neurological'], special_tests = request.form['special-tests'], passive_accessory = request.form['passive-accessory'], palpation = request.form['palpation'], other_tests = request.form['other-tests'], treatments = request.form['treatments'], comments = request.form['treatment-comments'], plan = request.form['plan'])
+		session.add(newConsult)
 		session.commit()
 		return redirect(url_for('showTreatments', patient_id = patient.id, diagnosis_id = diagnosis.id))
 	else:
@@ -184,27 +188,45 @@ def showTreatmentInfo(patient_id, diagnosis_id, treatment_id):
 def editTreatment(patient_id, diagnosis_id, treatment_id):
 	patient = session.query(Patient).filter_by(id = patient_id).one()
 	diagnosis = session.query(Diagnosis).filter_by(id = diagnosis_id).one()
-	treatmentToEdit = session.query(Treatment).filter_by(id = treatment_id).one()
+	consultToEdit = session.query(Consultation).filter_by(id = treatment_id).one()
 	if request.method == 'POST':
-		if request.form['treatment']:
-			treatmentToEdit.name = request.form['treatment']
-			session.add(treatmentToEdit)
+		if request.form['treatments']:
+			if request.form.get('consent'):
+				consentInput = True
+			else:
+				consentInput = False
+			consultToEdit.subjective = request.form['subjective']
+			consultToEdit.observation = request.form['observation']
+			consultToEdit.consent = consentInput
+			consultToEdit.active = request.form['active']
+			consultToEdit.passive = request.form['passive']
+			consultToEdit.strength = request.form['strength']
+			consultToEdit.functional = request.form['functional']
+			consultToEdit.neurological = request.form['neurological']
+			consultToEdit.special_tests = request.form['special-tests']
+			consultToEdit.passive_accessory = request.form['passive-accessory']
+			consultToEdit.palpation = request.form['palpation']
+			consultToEdit.other_tests = request.form['other-tests']
+			consultToEdit.treatments = request.form['treatments']
+			consultToEdit.comments = request.form['treatment-comments']
+			consultToEdit.plan = request.form['plan']
+			session.add(consultToEdit)
 			session.commit()
-		return redirect(url_for('showTreatments', patient_id = patient.id, diagnosis_id = diagnosis.id))
+		return redirect(url_for('showTreatmentInfo', patient_id = patient.id, diagnosis_id = diagnosis.id, treatment_id = consultToEdit.id))
 	else:
-		return render_template('edittreatment.html', patient = patient, diagnosis = diagnosis, treatment = treatmentToEdit)
+		return render_template('edittreatment.html', patient = patient, diagnosis = diagnosis, consult = consultToEdit)
 
 @app.route('/physiofiles/<int:patient_id>/diagnoses/<int:diagnosis_id>/treatments/<int:treatment_id>/delete/', methods=['GET', 'POST'])
 def deleteTreatment(patient_id, diagnosis_id, treatment_id):
 	patient = session.query(Patient).filter_by(id = patient_id).one()
 	diagnosis = session.query(Diagnosis).filter_by(id = diagnosis_id).one()
-	treatmentToDelete = session.query(Treatment).filter_by(id = treatment_id).one()
+	consultToDelete = session.query(Consultation).filter_by(id = treatment_id).one()
 	if request.method == 'POST':
-		session.delete(treatmentToDelete)
+		session.delete(consultToDelete)
 		session.commit()
 		return redirect(url_for('showTreatments', patient_id = patient.id, diagnosis_id = diagnosis.id))
 	else:
-		return render_template('deletetreatment.html', patient = patient, diagnosis = diagnosis, treatment = treatmentToDelete)
+		return render_template('deletetreatment.html', patient = patient, diagnosis = diagnosis, consult = consultToDelete)
 
 
 ## For running website on localhost:5000 in debug mode (automatic refresh of webserver on file save)

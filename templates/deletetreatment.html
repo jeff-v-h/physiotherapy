@@ -8,26 +8,41 @@
 </head>
 <body>
 	<div id="content">
+		<div id="topbar">
+			<div>
+				<a href="{{url_for('showPatients')}}">Home</a>
+			</div>
+		</div>
 		<div id="header">
-			<h1>Delete Treatment</h1>
+			<h1>Delete Consultation</h1>
 		</div>
 		<div id="main">
-			<form action="{{url_for('deleteTreatment', patient_id = patient.id, diagnosis_id = diagnosis.id, treatment_id = treatment.id)}}" method="post">
+			<div id="main">
+			<div>
+				Patient: {{patient.firstname}} {{patient.lastname}}
+			</div>
+			<div>
+				Diagnosis: {{diagnosis.diagnosis1}}<br>
+				{% if diagnosis.diagnosis2 %}
+				Additional diagnoses: {{diagnosis.diagnosis2}} 
+				{% endif %}
+				{% if diagnosis.diagnosis3 %}
+				& {{diagnosis.diagnosis3}}<br>
+				{% endif %}
+			</div>
+			<div>
+				Consult id: {{consult.id}}
+			</div>
+			<form action="{{url_for('deleteTreatment', patient_id = patient.id, diagnosis_id = diagnosis.id, treatment_id = consult.id)}}" method="post">
 				<div>
-					Patient: {{patient.firstname}} {{patient.lastname}}
+					Are you sure you want to delete this consultation from database? (This action is irreversible!!)
 				</div>
 				<div>
-					Diagnosis: {{diagnosis.name}}
-				</div>
-				<div>
-					Delete {{treatment.name}}?
-				</div>
-				<div>
-					<a href="{{ url_for('showTreatments', patient_id = patient.id, diagnosis_id = diagnosis.id) }}"><button>Delete</button></a>
+					<button>Delete</button>
 				</div>
 			</form>
 			<div>
-				<a href="{{ url_for('showTreatments', patient_id = patient.id, diagnosis_id = diagnosis.id) }}"><button>Cancel</button></a>
+				<a href="{{ url_for('showTreatmentInfo', patient_id = patient.id, diagnosis_id = diagnosis.id, treatment_id = consult.id) }}"><button>Cancel</button></a>
 			</div>
 		</div>
 	</div>

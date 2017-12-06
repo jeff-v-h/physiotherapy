@@ -33,9 +33,37 @@
 				Consult id: {{consult.id}}
 			</div>
 			<div>
+				<a href="{{ url_for('showTreatments', patient_id = patient.id, diagnosis_id = diagnosis.id) }}"><button>Back</button></a>
+			</div>
+			<div>
 				<h3>Consult Information</h3>
 				<div>
-					Consult: {{consult.id}}<br>
+					{% if consult.initial %} 
+					Treatment Type: Initial
+					{% else %}
+					Treatment-Type: Follow up
+					{% endif %}
+
+					<h4>Subjective</h4>
+					{{consult.subjective}}
+
+					<h4>Objective</h4>
+					Observation: {{consult.observation}}<br>
+					Consent: {{consult.consent}}<br>
+					Active: {{consult.active}}<br>
+					Passive: {{consult.passive}}<br>
+					Strength: {{consult.strength}}<br>
+					Functional: {{consult.functional}}<br>
+					Neurological: {{consult.neurological}}<br>
+					Special Tests: {{consult.special_tests}}<br>
+					Passive Accessory: {{consult.passive_accessory}}<br>
+					Palpation: {{consult.palpation}}<br>
+					Other tests: {{consult.other_tests}}
+
+					<h4>Treatments</h4>
+					Treatments Provided: {{consult.treatments}}<br>
+					Comments: {{consult.comments}}<br>
+					Plan: {{consult.plan}}
 				</div>
 				<div>
 					<a href="{{ url_for('editTreatment', patient_id = patient.id, diagnosis_id = diagnosis.id, treatment_id = consult.id) }}"><button>Edit</button></a>
@@ -47,7 +75,7 @@
 		</div>
 	</div>
 	<footer id="footer">
-		<p>Copyright</p>
+		<p>&copy; Copyright 2017 by Jeffrey Huang. All rights reserved.</p>
 	</footer>
 </body>
 </html>

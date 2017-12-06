@@ -21,33 +21,85 @@
 				Patient: {{patient.firstname}} {{patient.lastname}}
 			</div>
 			<div>
-				Diagnosis: {{diagnosis.name}}
+				Diagnosis: {{diagnosis.diagnosis1}}<br>
+				{% if diagnosis.diagnosis2 %}
+				Additional diagnoses: {{diagnosis.diagnosis2}} 
+				{% endif %}
+				{% if diagnosis.diagnosis3 %}
+				& {{diagnosis.diagnosis3}}<br>
+				{% endif %}
 			</div>
-			<form action="{{url_for('newTreatment', patient_id = patient.id, diagnosis_id = diagnosis.id)}}" method="post" id="treatment-form">
-				<section id="treatments">
-					<h2>Treatments Provided</h2>
-					<input type="text" name="treatment1" id="treatment1"><br>
-					<input type="text" name="treatment2" id="treatment1"><br>
-					<input type="text" name="treatment3" id="treatment1"><br>
-					<input type="text" name="treatment4" id="treatment1"><br>
-					<input type="text" name="treatment5" id="treatment1"><br>
-					<input type="text" name="treatment6" id="treatment1"><br>
-					<input type="text" name="treatment7" id="treatment1"><br>
-					<input type="text" name="treatment8" id="treatment1"><br>
-					<!--<br><button type="button" id="btn-treatment" onclick="addTreatment()">Add treatment</button> -->
+			<form action="{{url_for('newTreatment', patient_id = patient.id, diagnosis_id = diagnosis.id)}}" method="post" id="consult-form">
+				<section>
+					<h2>Subjective</h2>
+					<textarea name="subjective" form="consult-form" maxlength="500"></textarea>
 				</section>
-				<section id="additional">
-					<h2>Additional Comments</h2>
-					<textarea name="comment" form="treatment-form"></textarea>
+				<section id="physical">
+					<h2>Physical Examination</h2>
+					<div>
+						<label for="consent">Consent</label>
+						<input type="checkbox" name="consent" id="consent">
+					</div>
+					<div class="flex-container">
+						<div>
+							<h4>Observation</h4>
+							<textarea name="observation" form="consult-form" maxlength="500"></textarea>
+						</div>
+						<div>
+							<h4>Active Movements</h4>
+							<textarea name="active" form="consult-form" maxlength="500"></textarea>
+						</div>
+						<div>
+							<h4>Passive Movements</h4>
+							<textarea name="passive" form="consult-form" maxlength="500"></textarea>
+						</div>
+						<div>
+							<h4>Strength Tests</h4>
+							<textarea name="strength" form="consult-form" maxlength="500"></textarea>
+						</div>
+						<div>
+							<h4>Functional Tests</h4>
+							<textarea name="functional" form="consult-form" maxlength="500"></textarea>
+						</div>
+						<div>
+							<h4>Neurological Tests</h4>
+							<textarea name="neurological" form="consult-form" maxlength="500"></textarea>
+						</div>
+						<div>
+							<h4>Special Tests</h4>
+							<textarea name="special-tests" form="consult-form" maxlength="500"></textarea>
+						</div>
+						<div>
+							<h4>Passive Accessory Movements</h4>
+							<textarea name="passive-accessory" form="consult-form" maxlength="500"></textarea>
+						</div>
+						<div>
+							<h4>Palpation</h4>
+							<textarea name="palpation" form="consult-form" maxlength="500"></textarea>
+						</div>
+						<div>
+							<h4>Other Tests/Comments</h4>
+							<textarea name="other-tests" form="consult-form" maxlength="500"></textarea>
+						</div>
+					</div>
 				</section>
-				<section id="plan">
-					<h2>Plan</h2>
-					<textarea name="plan" form="treatment-form" maxlength="250"></textarea>
-					<!--<br><button type="button" id="btn-plan" onclick="addPlan()">Add plan</button>-->
+				<section>
+					<div id="treatments">
+						<h2>Treatments Provided</h2>
+						<textarea name="treatments" form="consult-form" maxlength="1000"></textarea>
+					</div>
+					<div id="additional">
+						<h4>Additional Comments</h4>
+						<textarea name="treatment-comments" form="consult-form" maxlength="1000"></textarea>
+					</div>
+					<div id="plan">
+						<h4>Plan</h4>
+						<textarea name="plan" form="consult-form" maxlength="500"></textarea>
+					</div>
+					<div>
+						<button>Submit</button>
+					</div>
 				</section>
-				<div>
-					<a href="{{ url_for('showTreatments', patient_id = patient.id, diagnosis_id = diagnosis.id) }}"><button>Create</button></a>
-				</div>
 			</form>
 			<div>
 				<a href="{{ url_for('showTreatments', patient_id = patient.id, diagnosis_id = diagnosis.id) }}"><button>Cancel</button></a>
