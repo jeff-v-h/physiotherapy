@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Physio History Chart</title>
+	<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='style.css') }}">
+	<meta name="viewport" content="width=device-width,initial-scale=1">
+</head>
+<body>
+	<div id="content">
+		<div id="topbar">
+			<div>
+				<a href="{{url_for('patientList')}}">Home</a>
+			</div>
+		</div>
+		<div id="header">
+			<h1>Consultation Details</h1>
+		</div>
+		<div id="main">
+			<div>
+				Patient: {{patient.firstname}} {{patient.lastname}}
+			</div>
+			<div>
+				Diagnosis: {{episode.diagnosis1}}<br>
+				{% if episode.diagnosis2 %}
+				Additional diagnoses: {{episode.diagnosis2}} 
+				{% endif %}
+				{% if episode.diagnosis3 %}
+				& {{episode.diagnosis3}}<br>
+				{% endif %}
+			</div>
+			<div>
+				Consult id: {{consult.id}}
+			</div>
+			<div>
+				<a href="{{ url_for('episodeInfo', patient_id = patient.id, episode_id = episode.id) }}"><button>Back</button></a>
+			</div>
+			<div>
+				<h3>Consult Information</h3>
+				<div>
+					{% if consult.initial %} 
+					Treatment Type: Initial
+					{% else %}
+					Treatment-Type: Follow up
+					{% endif %}
+
+					<h4>Subjective</h4>
+					{{consult.subjective}}
+
+					<h4>Objective</h4>
+					Observation: {{consult.observation}}<br>
+					Consent: {{consult.consent}}<br>
+					Active: {{consult.active}}<br>
+					Passive: {{consult.passive}}<br>
+					Strength: {{consult.strength}}<br>
+					Functional: {{consult.functional}}<br>
+					Neurological: {{consult.neurological}}<br>
+					Special Tests: {{consult.special_tests}}<br>
+					Passive Accessory: {{consult.passive_accessory}}<br>
+					Palpation: {{consult.palpation}}<br>
+					Other tests: {{consult.other_tests}}
+
+					<h4>Treatments</h4>
+					Treatments Provided: {{consult.treatments}}<br>
+					Comments: {{consult.comments}}<br>
+					Plan: {{consult.plan}}
+				</div>
+				<div>
+					<a href="{{ url_for('editConsult', patient_id = patient.id, episode_id = episode.id, consult_id = consult.id) }}"><button>Edit</button></a>
+				</div>
+				<div>
+					<a href="{{ url_for('deleteConsult', patient_id = patient.id, episode_id = episode.id, consult_id = consult.id) }}"><button>Delete</button></a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<footer id="footer">
+		<p>&copy; Copyright 2017 by Jeffrey Huang. All rights reserved.</p>
+	</footer>
+</body>
+</html>

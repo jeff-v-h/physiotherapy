@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Physio History Chart</title>
+	<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='style.css') }}">
+	<meta name="viewport" content="width=device-width,initial-scale=1">
+</head>
+<body>
+	<div id="content">
+		<div id="topbar">
+			<div>
+				<a href="{{url_for('patientList')}}">Home</a>
+			</div>
+		</div>
+		<div id="header">
+			<h1>Edit Diagnosis</h1>
+		</div>
+		<div id="main">
+			<div>
+				Patient: {{patient.firstname}} {{patient.lastname}}
+			</div>
+			<div>
+				<a href="{{ url_for('episodeInfo', patient_id = patient.id, episode_id = episode.id) }}"><button>Back</button></a>
+			</div>
+			<form action="{{url_for('editEpisode', patient_id = patient.id, episode_id = episode.id)}}" method="post" id="edit-episode-form">
+				<div id="vas" style="display: block">
+					<h4>Pain Presentation</h4>
+					<label for="pain">Pain Scale:</label>
+					<input type="number" name="pain" min="0" max="10" id="pain" value="{{episode.pain}}">
+					<p>Pain description:</p>
+					<textarea name="pain-description" form="edit-episode-form" maxlength="500">{{episode.pain_description}}</textarea>
+
+					<label for="pins-needles">Pins & needles</label>
+					{% if episode.pins_needles %}
+					<input type="checkbox" name="pins-needles" id="pins-needles" checked><br>
+					{% else %}
+					<input type="checkbox" name="pins-needles" id="pins-needles"><br>
+					{% endif %}
+
+					<label for="numbness">Numbness</label>
+					{% if episode.numbness %}
+					<input type="checkbox" name="numbness" id="numbness" checked>
+					{% else %}
+					<input type="checkbox" name="numbness" id="numbness">
+					{% endif %}
+
+				</div>
+				<div class="flex-container">
+					<div>
+						<h4>Current History</h4>
+						<textarea name="current-history" form="edit-episode-form" maxlength="1000">{{episode.current_history}}</textarea>
+					</div>
+					<div>
+						<h4>Aggravating Factors</h4>
+						<textarea name="agg" form="edit-episode-form" maxlength="250">{{episode.aggs}}</textarea>
+					</div>
+					<div>
+						<h4>Easing Factors</h4>
+						<textarea name="ease" form="edit-episode-form" maxlength="250">{{episode.ease}}</textarea>
+					</div>
+					<div>
+						<h4>24 Hour History</h4>
+						<textarea name="24hr" form="edit-episode-form" maxlength="250">{{episode.daily_history}}</textarea>
+					</div>
+					<div>
+						<h4>Past History</h4>
+						<textarea name="past-hx" form="edit-episode-form" maxlength="250">{{episode.past_history}}</textarea>
+					</div>
+					<div>
+						<h4>Social & Family History</h4>
+						<textarea name="social-hx" form="edit-episode-form" maxlength="250">{{episode.social_history}}</textarea>
+					</div>
+					<div>
+						<h4>Special Questions</h4>
+						<textarea name="special-q" form="edit-episode-form" maxlength="250">{{episode.special_q}}</textarea>
+					</div>
+					<div>
+						<h4>Additional Comments</h4>
+						<textarea name="comments" form="edit-episode-form" maxlength="1000">{{episode.comments}}</textarea>
+					</div>
+				</div>
+				<div>
+					<h2>Diagnostic Impression/s</h2>
+					Diagnosis 1:<input type="text" name="diagnosis1" size="50" maxlength="80" value="{{episode.diagnosis1}}"><br>
+					Diagnosis 2:<input type="text" name="diagnosis2" size="50" maxlength="80" value="{{episode.diagnosis2}}"><br>
+					Diagnosis 3:<input type="text" name="diagnosis3" size="50" maxlength="80" value="{{episode.diagnosis3}}"><br>
+				</div>
+				<div>
+					<button>Edit</button>
+				</div>
+			</form>
+			<div>
+				<a href="{{ url_for('episodeInfo', patient_id = patient.id, episode_id = episode.id) }}"><button>Cancel</button></a>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

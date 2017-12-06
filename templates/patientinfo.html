@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Physio History Chart</title>
+	<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='style.css') }}">
+	<meta name="viewport" content="width=device-width,initial-scale=1">
+</head>
+<body>
+	<div id="content">
+		<div id="topbar">
+			<div>
+				<a href="{{url_for('patientList')}}">Home</a>
+			</div>
+		</div>
+		<div id="header">
+			<h1>Patient File</h1>
+		</div>
+		<div id="main">
+			<div>
+				Patient: {{patient.firstname}} {{patient.lastname}}
+			</div>
+			<div>
+				<a href="{{ url_for('patientList') }}"><button>Back</button></a>
+			</div>
+			<div>
+				<h3>Patient Information</h3>
+				<div>
+					Date Started: {{patient.date_started}}<br>
+					Title: {{patient.title}}<br>
+					First Name: {{patient.firstname}}<br>
+					Last Name: {{patient.lastname}}<br>
+					Date of Birth: {{patient.birthdate}} (year-month-day)<br>
+					Mobile: {{patient.mobile}}<br>
+					Home Phone: {{patient.home_ph}}<br>
+					Work Phone: {{patient.work_ph}}<br>
+					E-mail: {{patient.email}}<br>
+					Occupation: {{patient.occupation}}<br>
+				</div>
+				<div>
+					<a href="{{ url_for('editPatient', patient_id = patient.id) }}"><button>Edit</button></a>
+				</div>
+				<div>
+					<a href="{{ url_for('deletePatient', patient_id = patient.id) }}"><button>Delete</button></a>
+				</div>
+			</div>
+			<div>
+				<h3>Injury Episodes</h3>
+				<div>
+					<a href="{{ url_for('newEpisode', patient_id = patient.id) }}"><button>New Episode</button></a>
+				</div>
+				<div id="list">
+					{% for episode in episodes %}
+					<div class="list-item">
+						<div>
+							<a href="{{ url_for('episodeInfo', patient_id = patient.id, episode_id = episode.id) }}">{{episode.diagnosis1}}</a><br>
+							{% if episode.diagnosis2 %}
+							Additional coinciding injuries: {{episode.diagnosis2}} 
+							{% endif %}
+							{% if episode.diagnosis3 %}
+							& {{episode.diagnosis3}}<br>
+							{% endif %}
+						</div>
+					</div>
+					{% endfor %}
+				</div>
+			</div>
+		</div>
+	</div>
+	<footer id="footer">
+		<p>Copyright</p>
+	</footer>
+</body>
+</html>

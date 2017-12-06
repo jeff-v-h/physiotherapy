@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Physio History Chart</title>
+	<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='style.css') }}">
+	<meta name="viewport" content="width=device-width,initial-scale=1">
+</head>
+<body>
+	<div id="content">
+		<div id="topbar">
+			<div>
+				<a href="{{url_for('patientList')}}">Home</a>
+			</div>
+		</div>
+		<div id="header">
+			<h1>Episode Details</h1>
+		</div>
+		<div id="main">
+			<div>
+				Patient: {{patient.firstname}} {{patient.lastname}}
+			</div>
+			<div>
+				Diagnosis: {{episode.diagnosis1}}<br>
+				{% if episode.diagnosis2 %}
+				Additional diagnoses: {{episode.diagnosis2}} 
+				{% endif %}
+				{% if episode.diagnosis3 %}
+				& {{episode.diagnosis3}}<br>
+				{% endif %}
+			</div>
+			<div>
+				<a href="{{ url_for('patientInfo', patient_id = patient.id) }}"><button>Back</button></a>
+			</div>
+			<div>
+				<h3>episode Information</h3>
+				<div>
+					Main Diagnosis: {{episode.diagnosis1}}<br>
+					Other Diagnoses: {{episode.diagnosis2}}<br>
+					                 {{episode.diagnosis3}}<br>
+					Pain Scale: {{episode.pain}}<br>
+					Pain Description: {{episode.pain_description}}<br>
+					Pins & Needles: {{episode.pins_needles}}<br>
+					Numbness: {{episode.numbness}}<br>
+					Current History: {{episode.current_history}}<br>
+					Aggravating Factors: {{episode.aggs}}<br>
+					Easing factors: {{episode.ease}}<br>
+					24 Hr History: {{episode.daily_history}}<br>
+					Past History: {{episode.past_history}}<br>
+					Social History: {{episode.social_history}}<br>
+					Special Questions: {{episode.special_q}}<br>
+					Comments: {{episode.comments}}<br>
+				</div>
+				<div>
+					<a href="{{ url_for('editEpisode', patient_id = patient.id, episode_id = episode.id) }}"><button>Edit</button></a>
+				</div>
+				<div>
+					<a href="{{ url_for('deleteEpisode', patient_id = patient.id, episode_id = episode.id) }}"><button>Delete</button></a>
+				</div>
+			</div>
+			<div>
+				<h3>Consultations & Treatments Provided</h3>
+				<div>
+					<a href="{{ url_for('newConsult', patient_id = patient.id, episode_id = episode.id) }}"><button>New Treatment</button></a>
+				</div>
+				<div id="list">
+					{% for consult in consults %}
+					<div class="list-item">
+						<div>
+							<a href="{{ url_for('consultInfo', patient_id = patient.id, episode_id = episode.id, consult_id = consult.id) }}">Consult id: {{consult.id}}</a><br>
+						</div>
+					</div>
+					{% endfor %}
+				</div>
+			</div>
+		</div>
+	</div>
+	<footer id="footer">
+		<p>Copyright</p>
+	</footer>
+</body>
+</html>
