@@ -1,26 +1,18 @@
 /*
- * CONTENT
+ * WRAPPERS
  */
 html, body{
-  padding: 0;
-  margin: 0;
-}
-html{
-  height: 100%;
-}
-body{
-  min-height: 100%;
-  display: flex;
-  flex-direction: column;
+	padding: 0;
+	margin: 0;
+	height: 100%;
 }
 
-#content {
-	max-width: 1024px;
+#wrapper {
 	width: 100%;
 	min-height: 100%;
-	margin: 3em auto;
-	margin-top: 0px;
+	margin: 0 auto;
 	flex: 1 0 auto;
+	position: relative; /* to absolute position footer to bottom */
 }
 
 a {
@@ -31,7 +23,6 @@ a {
  * TOPBAR
  */
 #topbar {
-	max-width: 1024px;
 	background-color: #209AEE;
 	display: table;
 	width: 100%;
@@ -48,23 +39,25 @@ a {
  * HEADER
  */
 #header {
-	max-width: 1024px;
+	width: 100%;
 	background-color: #BDEAFD;
 	text-align: center;
-	margin: auto;
 	padding-bottom: 1em;
 	padding-top: 1em;
 }
 
 /*
- * MAIN PAGE
+ * MAIN PAGE CONTENT
  */
-#top-buttons {
+#new-patient-btn {
 	padding: 20px;
 }
 
-#main {
-	padding: 10px;
+#content {
+	padding: 10px 10px 100px; 
+	/* bottom padding more than height of footer to keep to bottom of page for short pages */
+	max-width: 800px;
+	margin: auto;
 }
 
 
@@ -73,11 +66,13 @@ a {
  */
 
 #footer {
-	max-width: 1024px;
+	position: absolute;
+	height: 60px;
+	bottom: 0;
+	/* above 3 properties help keep footer to bottom of page */
 	background-color: #BDEAFD;
 	text-align: center;
-	margin: 1em auto 0;
+	width: 100%;
 	padding-bottom: 1em;
 	padding-top: 1em;
-	width: 100%;
 }

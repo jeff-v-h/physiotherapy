@@ -1,110 +1,95 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<meta charset="utf-8">
-	<title>Physio History Chart</title>
-	<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='style.css') }}">
-	<meta name="viewport" content="width=device-width,initial-scale=1">
-</head>
-<body>
-	<div id="content">
-		<div id="topbar">
-			<div>
-				<a href="{{url_for('patientList')}}">Home</a>
-			</div>
-		</div>
-		<div id="header">
-			<h1>New Consultation</h1>
-		</div>
-		<div id="main">
-			<div>
-				Patient: {{patient.firstname}} {{patient.lastname}}
-			</div>
-			<div>
-				Diagnosis: {{episode.diagnosis1}}<br>
-				{% if episode.diagnosis2 %}
-				Additional diagnoses: {{episode.diagnosis2}} 
-				{% endif %}
-				{% if episode.diagnosis3 %}
-				& {{episode.diagnosis3}}<br>
-				{% endif %}
-			</div>
-			<form action="{{url_for('newConsult', patient_id = patient.id, episode_id = episode.id)}}" method="post" id="consult-form">
-				<section>
-					<h2>Subjective</h2>
-					<textarea name="subjective" form="consult-form" maxlength="500"></textarea>
-				</section>
-				<section id="physical">
-					<h2>Physical Examination</h2>
-					<div>
-						<label for="consent">Consent</label>
-						<input type="checkbox" name="consent" id="consent">
-					</div>
-					<div class="flex-container">
-						<div>
-							<h4>Observation</h4>
-							<textarea name="observation" form="consult-form" maxlength="500"></textarea>
-						</div>
-						<div>
-							<h4>Active Movements</h4>
-							<textarea name="active" form="consult-form" maxlength="500"></textarea>
-						</div>
-						<div>
-							<h4>Passive Movements</h4>
-							<textarea name="passive" form="consult-form" maxlength="500"></textarea>
-						</div>
-						<div>
-							<h4>Strength Tests</h4>
-							<textarea name="strength" form="consult-form" maxlength="500"></textarea>
-						</div>
-						<div>
-							<h4>Functional Tests</h4>
-							<textarea name="functional" form="consult-form" maxlength="500"></textarea>
-						</div>
-						<div>
-							<h4>Neurological Tests</h4>
-							<textarea name="neurological" form="consult-form" maxlength="500"></textarea>
-						</div>
-						<div>
-							<h4>Special Tests</h4>
-							<textarea name="special-tests" form="consult-form" maxlength="500"></textarea>
-						</div>
-						<div>
-							<h4>Passive Accessory Movements</h4>
-							<textarea name="passive-accessory" form="consult-form" maxlength="500"></textarea>
-						</div>
-						<div>
-							<h4>Palpation</h4>
-							<textarea name="palpation" form="consult-form" maxlength="500"></textarea>
-						</div>
-						<div>
-							<h4>Other Tests/Comments</h4>
-							<textarea name="other-tests" form="consult-form" maxlength="500"></textarea>
-						</div>
-					</div>
-				</section>
-				<section>
-					<div id="treatments">
-						<h2>Treatments Provided</h2>
-						<textarea name="treatments" form="consult-form" maxlength="1000"></textarea>
-					</div>
-					<div id="additional">
-						<h4>Additional Comments</h4>
-						<textarea name="treatment-comments" form="consult-form" maxlength="1000"></textarea>
-					</div>
-					<div id="plan">
-						<h4>Plan</h4>
-						<textarea name="plan" form="consult-form" maxlength="500"></textarea>
-					</div>
-					<div>
-						<button>Submit</button>
-					</div>
-				</section>
-			</form>
-			<div>
-				<a href="{{ url_for('episodeInfo', patient_id = patient.id, episode_id = episode.id) }}"><button>Cancel</button></a>
-			</div>
-		</div>
+{% extends "layout.html" %}
+{% block head %}
+	{{ super() }}
+{% endblock %}
+{% block title %} New Consultation {% endblock %}
+{% block heading %} New Consultation {% endblock %}
+{% block content %}
+	<div>
+		Patient: {{patient.firstname}} {{patient.lastname}}
 	</div>
-</body>
-</html>
+	<div>
+		Diagnosis: {{episode.diagnosis1}}<br>
+		{% if episode.diagnosis2 %}
+		Additional diagnoses: {{episode.diagnosis2}} 
+		{% endif %}
+		{% if episode.diagnosis3 %}
+		& {{episode.diagnosis3}}<br>
+		{% endif %}
+	</div>
+	<form action="{{url_for('newConsult', patient_id = patient.id, episode_id = episode.id)}}" method="post" id="consult-form">
+		<section>
+			<h2>Subjective</h2>
+			<textarea name="subjective" form="consult-form" maxlength="500"></textarea>
+		</section>
+		<section id="physical">
+			<h2>Physical Examination</h2>
+			<div>
+				<label for="consent">Consent</label>
+				<input type="checkbox" name="consent" id="consent">
+			</div>
+			<div class="flex-container">
+				<div>
+					<h4>Observation</h4>
+					<textarea name="observation" form="consult-form" maxlength="500"></textarea>
+				</div>
+				<div>
+					<h4>Active Movements</h4>
+					<textarea name="active" form="consult-form" maxlength="500"></textarea>
+				</div>
+				<div>
+					<h4>Passive Movements</h4>
+					<textarea name="passive" form="consult-form" maxlength="500"></textarea>
+				</div>
+				<div>
+					<h4>Strength Tests</h4>
+					<textarea name="strength" form="consult-form" maxlength="500"></textarea>
+				</div>
+				<div>
+					<h4>Functional Tests</h4>
+					<textarea name="functional" form="consult-form" maxlength="500"></textarea>
+				</div>
+				<div>
+					<h4>Neurological Tests</h4>
+					<textarea name="neurological" form="consult-form" maxlength="500"></textarea>
+				</div>
+				<div>
+					<h4>Special Tests</h4>
+					<textarea name="special-tests" form="consult-form" maxlength="500"></textarea>
+				</div>
+				<div>
+					<h4>Passive Accessory Movements</h4>
+					<textarea name="passive-accessory" form="consult-form" maxlength="500"></textarea>
+				</div>
+				<div>
+					<h4>Palpation</h4>
+					<textarea name="palpation" form="consult-form" maxlength="500"></textarea>
+				</div>
+				<div>
+					<h4>Other Tests/Comments</h4>
+					<textarea name="other-tests" form="consult-form" maxlength="500"></textarea>
+				</div>
+			</div>
+		</section>
+		<section>
+			<div id="treatments">
+				<h2>Treatments Provided</h2>
+				<textarea name="treatments" form="consult-form" maxlength="1000"></textarea>
+			</div>
+			<div id="additional">
+				<h4>Additional Comments</h4>
+				<textarea name="treatment-comments" form="consult-form" maxlength="1000"></textarea>
+			</div>
+			<div id="plan">
+				<h4>Plan</h4>
+				<textarea name="plan" form="consult-form" maxlength="500"></textarea>
+			</div>
+			<div>
+				<button>Submit</button>
+			</div>
+		</section>
+	</form>
+	<div>
+		<a href="{{ url_for('episodeInfo', patient_id = patient.id, episode_id = episode.id) }}"><button>Cancel</button></a>
+	</div>
+{% endblock %}

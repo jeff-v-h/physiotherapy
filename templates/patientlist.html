@@ -1,39 +1,20 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<meta charset="utf-8">
-	<title>Physio History Chart</title>
-	<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='style.css') }}">
-	<meta name="viewport" content="width=device-width,initial-scale=1">
-</head>
-<body>
-	<div id="content">
-		<div id="topbar">
-			<div>
-				<a href="{{url_for('patientList')}}">Home</a>
-			</div>
-		</div>
-		<div id="header">
-			<h1>Physio Files</h1>
-		</div>
-		<div id="main">
-			<div id="top-buttons">
-				<a href="{{ url_for('newPatient') }}"><button>New Patient</button></a>
-			</div>
-			<div id="list">
-				{% for patient in patients %}
-				<div class="list-item">
-					<div>
-						<a href="{{ url_for('patientInfo', patient_id = patient.id) }}">{{patient.firstname}} {{patient.lastname}}</a> with id: {{patient.id}}
-					</div>
-				</div>
-				{% endfor %}
-				
-			</div>	
-		</div>
+{% extends "layout.html" %}
+{% block head %}
+	{{ super() }}
+{% endblock %}
+{% block title %} PT Files {% endblock %}
+{% block heading %} Patient List {% endblock %}
+{% block content %}
+	<div id="new-patient-btn">
+		<a href="{{ url_for('newPatient') }}"><button>New Patient</button></a>
 	</div>
-	<footer id="footer">
-		<p>Copyright</p>
-	</footer>
-</body>
-</html>
+	<div id="list">
+		{% for patient in patients %}
+		<div class="list-item">
+			<div>
+				<a href="{{ url_for('patientInfo', patient_id = patient.id) }}">{{patient.firstname}} {{patient.lastname}}</a> with id: {{patient.id}}
+			</div>
+		</div>
+		{% endfor %}
+	</div>
+{% endblock %}

@@ -1,83 +1,68 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<meta charset="utf-8">
-	<title>Physio History Chart</title>
-	<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='style.css') }}">
-	<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='newformstyle.css')}}">
-	<meta name="viewport" content="width=device-width,initial-scale=1">
-</head>
-<body>
-	<div id="content">
-		<div id="topbar">
+{% extends "layout.html" %}
+{% block head %}
+	{{ super() }}
+<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='newformstyle.css')}}">
+{% endblock %}
+{% block title %} New Patient {% endblock %}
+{% block heading %} New Patient {% endblock %}
+{% block content %}
+	<section id="details">
+		<h2>Personal Details</h2>
+		<form action="{{url_for('newPatient')}}" method="post">
 			<div>
-				<a href="{{url_for('patientList')}}">Home</a>
+				<label for="date">Date:</label>
+				<input type="date" name="date" id="date">
 			</div>
-		</div>
-		<div id="header">
-			<h1>New Patient</h1>
-		</div>
-		<div id="main">
-			<section id="details">
-				<h2>Personal Details</h2>
-				<form action="{{url_for('newPatient')}}" method="post">
-					<div>
-						<label for="date">Date:</label>
-						<input type="date" name="date" id="date">
-					</div>
-					<div>
-						<label>Title:</label>
-						<select name="title">
-							<option value="Mr">Mr</option>
-							<option value="Mrs">Mrs</option>
-							<option value="Miss">Miss</option>
-							<option value="Ms">Ms</option>
-						</select>
-					</div>
-					<div>
-						<label for="firstname">First Name:</label>
-						<input type="text" name="firstname">
-					</div>
-					<div>
-						<label for="lastname">Last Name:</label>
-						<input type="text" name="lastname">
-					</div>
-					<div>
-						<label for="dob">Date of Birth:</label>
-						<input type="date" name="dob" id="dob">
-					</div>
-					<div>
-						<label for="mobile">Mobile #:</label>
-						<input type="number" name="mobile">
-					</div>
-					<div>
-						<label for="home-phone">Home #:</label>
-						<input type="number" name="home-ph">
-					</div>
-					<div>
-						<label for="work-phone">Work #:</label>
-						<input type="number" name="work-ph">
-					</div>
-					<div>
-						<label for="work-phone">E-mail:</label>
-						<input type="email" name="email">
-					</div>
-					<div>
-						<label for="occupation">Occupation:</label>
-						<input type="text" name="occupation">
-					</div>
-					<div class="flex-container">
-						<input type="submit" value="Create" id="btn-submit">
-					</div>
-				</form>
-				<a href="{{ url_for('patientList') }}"><button>Cancel</button></a>
-			</section>
-		</div> <!-- main div end -->	
-	</div>
-	<footer id="footer">
-		<p>Copyright</p>
-	</footer>
+			<div>
+				<label>Title:</label>
+				<select name="title">
+					<option value="Mr">Mr</option>
+					<option value="Mrs">Mrs</option>
+					<option value="Miss">Miss</option>
+					<option value="Ms">Ms</option>
+				</select>
+			</div>
+			<div>
+				<label for="firstname">First Name:</label>
+				<input type="text" name="firstname">
+			</div>
+			<div>
+				<label for="lastname">Last Name:</label>
+				<input type="text" name="lastname">
+			</div>
+			<div>
+				<label for="dob">Date of Birth:</label>
+				<input type="date" name="dob" id="dob">
+			</div>
+			<div>
+				<label for="mobile">Mobile #:</label>
+				<input type="number" name="mobile">
+			</div>
+			<div>
+				<label for="home-phone">Home #:</label>
+				<input type="number" name="home-ph">
+			</div>
+			<div>
+				<label for="work-phone">Work #:</label>
+				<input type="number" name="work-ph">
+			</div>
+			<div>
+				<label for="work-phone">E-mail:</label>
+				<input type="email" name="email">
+			</div>
+			<div>
+				<label for="occupation">Occupation:</label>
+				<input type="text" name="occupation">
+			</div>
+			<div class="flex-container">
+				<input type="submit" value="Create" id="btn-submit">
+			</div>
+		</form>
+		<a href="{{ url_for('patientList') }}"><button>Cancel</button></a>
+	</section>
+{% endblock %}
+
+{% block scripts %}
 	<script type="text/javascript" src="{{ url_for('static', filename='jquery-3.2.1.min.js') }}"></script>
 	<script type="text/javascript" src="{{ url_for('static', filename='app.js') }}"></script>
-</body>
-</html>
+{% endblock %}
