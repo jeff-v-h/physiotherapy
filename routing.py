@@ -28,11 +28,18 @@ def newPatient():
 	else:
 		return render_template('newpatient.html')
 
+@app.route('/physiofiles/<int:patient_id>/')
+@app.route('/physiofiles/<int:patient_id>/diagnoses/')
+def showDiagnoses(patient_id):
+	diagnosesForPatient = session.query(Diagnosis).filter_by(patient_id = patient_id).all()
+	patient = session.query(Patient).filter_by(id = patient_id).one()
+	return render_template('diagnoses.html', patient = patient, diagnoses = diagnosesForPatient)
+
 @app.route('/physiofiles/<int:patient_id>/edit/', methods=['GET', 'POST'])
 def editPatient(patient_id):
 	patientToEdit = session.query(Patient).filter_by(id = patient_id).one()
 	if request.method == 'POST':
-		if request.form['firstname'] and request.form['lastname']:
+		if request.form['firstname'] and request.form['lastname'] and request.form['dob'] and request.form['mobile']:
 			patientToEdit.date_started = request.form['date']
 			patientToEdit.title = request.form['title']
 			patientToEdit.firstname = request.form['firstname']
@@ -43,8 +50,10 @@ def editPatient(patient_id):
 			patientToEdit.work_ph = request.form['work-ph']
 			patientToEdit.email = request.form['email']
 			patientToEdit.occupation = request.form['occupation']
-		session.add(patientToEdit)
-		session.commit()
+			session.add(patientToEdit)
+			session.commit()
+		else:
+			print "fields required: firstname, lastname, date of birth and mobile"
 		return redirect(url_for('showDiagnoses', patient_id = patientToEdit.id))
 	else:
 		return render_template('editpatient.html', patient = patientToEdit)
@@ -61,13 +70,6 @@ def deletePatient(patient_id):
 
 
 ## Diagnoses/episodes
-@app.route('/physiofiles/<int:patient_id>/')
-@app.route('/physiofiles/<int:patient_id>/diagnoses/')
-def showDiagnoses(patient_id):
-	diagnosesForPatient = session.query(Diagnosis).filter_by(patient_id = patient_id).all()
-	patient = session.query(Patient).filter_by(id = patient_id).one()
-	return render_template('diagnoses.html', patient = patient, diagnoses = diagnosesForPatient)
-
 @app.route('/physiofiles/<int:patient_id>/diagnoses/new/', methods=['GET', 'POST'])
 def newDiagnosis(patient_id):
 	patient = session.query(Patient).filter_by(id = patient_id).one()
@@ -81,7 +83,7 @@ def newDiagnosis(patient_id):
 			nbInput = True
 		else:
 			nbInput = False
-		newDiagnosis = Diagnosis(pain = request.form['pain'], pain_description = request.form['pain-description'], pins_needles = pnInput, numbness = nbInput, current_history = request.form['current-history'], aggs = request.form['agg'], ease = request.form['ease'], daily_history = request.form['24hr'], past_history = request.form['past-hx'], social_history = request.form['social-hx'], special_q = request.form['special-q'], comments = request.form['comments'], diagnosis1 = request.form['diagnosis1'], diagnosis2 = request.form['diagnosis2'], diagnosis3 = request.form['diagnosis3'], patient_id = patient.id)
+		newDiagnosis = Diagnosis(patient_id = patient.id, pain = request.form['pain'], pain_description = request.form['pain-description'], pins_needles = pnInput, numbness = nbInput, current_history = request.form['current-history'], aggs = request.form['agg'], ease = request.form['ease'], daily_history = request.form['24hr'], past_history = request.form['past-hx'], social_history = request.form['social-hx'], special_q = request.form['special-q'], comments = request.form['comments'], diagnosis1 = request.form['diagnosis1'], diagnosis2 = request.form['diagnosis2'], diagnosis3 = request.form['diagnosis3'])
 		session.add(newDiagnosis)
 		# flush() to have primary_key (id) field updated into database for the Diagnosis
 		session.flush()
@@ -93,20 +95,53 @@ def newDiagnosis(patient_id):
 		session.add(newConsultation)
 
 		session.commit()
-		return redirect(url_for('showDiagnoses', patient_id = patient.id))
+		return redirect(url_for('showTreatments', patient_id = patient.id, diagnosis_id = newDiagnosis.id))
 	else:
 		return render_template('newdiagnosis.html', patient = patient)
+
+@app.route('/physiofiles/<int:patient_id>/diagnoses/<int:diagnosis_id>/')
+@app.route('/physiofiles/<int:patient_id>/diagnoses/<int:diagnosis_id>/treatments/')
+def showTreatments(patient_id, diagnosis_id):
+	patient = session.query(Patient).filter_by(id = patient_id).one()
+	diagnosis = session.query(Diagnosis).filter_by(id = diagnosis_id).one()
+	consults = session.query(Consultation).filter_by(diagnosis_id = diagnosis_id).all()
+	return render_template('treatments.html', patient = patient, diagnosis = diagnosis, consults = consults)
 
 @app.route('/physiofiles/<int:patient_id>/diagnoses/<int:diagnosis_id>/edit/', methods=['GET', 'POST'])
 def editDiagnosis(patient_id, diagnosis_id):
 	patient = session.query(Patient).filter_by(id = patient_id).one()
 	diagnosisToEdit = session.query(Diagnosis).filter_by(id = diagnosis_id).one()
 	if request.method == 'POST':
-		if request.form['diagnosis']:
-			diagnosisToEdit.name = request.form['diagnosis']
+		if request.form['diagnosis1'] and request.form['current-history']:
+			if request.form.get('pins-needles'):
+				pnInput = True
+			else:
+				pnInput = False
+			if request.form.get('numbness'):
+				nbInput = True
+			else:
+				nbInput = False
+			diagnosisToEdit.diagnosis1 = request.form['diagnosis1']
+			diagnosisToEdit.pain = request.form['pain']
+			diagnosisToEdit.pain_description = request.form['pain-description']
+			diagnosisToEdit.pins_needles = pnInput
+			diagnosisToEdit.numbness = nbInput
+			diagnosisToEdit.current_history = request.form['current-history']
+			diagnosisToEdit.aggs = request.form['agg']
+			diagnosisToEdit.ease = request.form['ease']
+			diagnosisToEdit.daily_history = request.form['24hr']
+			diagnosisToEdit.past_history = request.form['past-hx']
+			diagnosisToEdit.social_history = request.form['social-hx']
+			diagnosisToEdit.special_q = request.form['special-q']
+			diagnosisToEdit.comments = request.form['comments']
+			diagnosisToEdit.diagnosis1 = request.form['diagnosis1']
+			diagnosisToEdit.diagnosis2 = request.form['diagnosis2']
+			diagnosisToEdit.diagnosis3 = request.form['diagnosis3']
 			session.add(diagnosisToEdit)
 			session.commit()
-		return redirect(url_for('showDiagnoses', patient_id = patient.id))
+		else:
+			print "fields required: diagnosis1 and current history"
+		return redirect(url_for('showTreatments', patient_id = patient.id, diagnosis_id = diagnosisToEdit.id))
 	else:
 		return render_template('editdiagnosis.html', patient = patient, diagnosis = diagnosisToEdit)
 
@@ -114,23 +149,18 @@ def editDiagnosis(patient_id, diagnosis_id):
 def deleteDiagnosis(patient_id, diagnosis_id):
 	patient = session.query(Patient).filter_by(id = patient_id).one()
 	diagnosisToDelete = session.query(Diagnosis).filter_by(id = diagnosis_id).one()
+	associatedConsults = session.query(Consultation).filter_by(diagnosis_id = diagnosis_id).all()
 	if request.method == 'POST':
 		session.delete(diagnosisToDelete)
+		for consult in associatedConsults:
+			session.delete(consult)
 		session.commit()
 		return redirect(url_for('showDiagnoses', patient_id = patient.id))
 	else:
 		return render_template('deletediagnosis.html', patient = patient, diagnosis = diagnosisToDelete)
 
 
-##Treatments
-@app.route('/physiofiles/<int:patient_id>/diagnoses/<int:diagnosis_id>/')
-@app.route('/physiofiles/<int:patient_id>/diagnoses/<int:diagnosis_id>/treatments/')
-def showTreatments(patient_id, diagnosis_id):
-	patient = session.query(Patient).filter_by(id = patient_id).one()
-	diagnosis = session.query(Diagnosis).filter_by(id = diagnosis_id).one()
-	treatments = session.query(Treatment).filter_by(diagnosis_id = diagnosis_id).all()
-	return render_template('treatments.html', patient = patient, diagnosis = diagnosis, treatments = treatments)
-
+##New, Edit and delete treatment pages
 @app.route('/physiofiles/<int:patient_id>/diagnoses/<int:diagnosis_id>/treatments/new/', methods=['GET', 'POST'])
 def newTreatment(patient_id, diagnosis_id):
 	patient = session.query(Patient).filter_by(id = patient_id).one()
@@ -142,6 +172,13 @@ def newTreatment(patient_id, diagnosis_id):
 		return redirect(url_for('showTreatments', patient_id = patient.id, diagnosis_id = diagnosis.id))
 	else:
 		return render_template('newtreatment.html', patient = patient, diagnosis = diagnosis)
+
+@app.route('/physiofiles/<int:patient_id>/diagnoses/<int:diagnosis_id>/treatments/<int:treatment_id>/')
+def showTreatmentInfo(patient_id, diagnosis_id, treatment_id):
+	patient = session.query(Patient).filter_by(id = patient_id).one()
+	diagnosis = session.query(Diagnosis).filter_by(id = diagnosis_id).one()
+	consult = session.query(Consultation).filter_by(id = treatment_id).one()
+	return render_template('showtreatmentinfo.html', patient = patient, diagnosis = diagnosis, consult = consult)
 
 @app.route('/physiofiles/<int:patient_id>/diagnoses/<int:diagnosis_id>/treatments/<int:treatment_id>/edit/', methods=['GET', 'POST'])
 def editTreatment(patient_id, diagnosis_id, treatment_id):

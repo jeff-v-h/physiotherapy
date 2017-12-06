@@ -20,19 +20,8 @@
 			<div>
 				Patient: {{patient.firstname}} {{patient.lastname}}
 			</div>
-			<div id="top-buttons">
-				<div>
-					<a href="{{ url_for('editPatient', patient_id = patient.id) }}"><button>Edit</button></a>
-				</div>
-				<div>
-					<a href="{{ url_for('deletePatient', patient_id = patient.id) }}"><button>Delete</button></a>
-				</div>
-				<div>
-					<a href="{{ url_for('newDiagnosis', patient_id = patient.id) }}"><button>New Episode</button></a>
-				</div>
-				<div>
-					<a href="{{ url_for('showPatients', patient_id = patient.id) }}"><button>Back</button></a>
-				</div>
+			<div>
+				<a href="{{ url_for('showPatients') }}"><button>Back</button></a>
 			</div>
 			<div>
 				<h3>Patient Information</h3>
@@ -48,24 +37,33 @@
 					E-mail: {{patient.email}}<br>
 					Occupation: {{patient.occupation}}<br>
 				</div>
-			</div>
-			<div id="list">
-				<h3>Injury Episodes</h3>
-				{% for diagnosis in diagnoses %}
-				<div class="list-item">
-					<div>
-						<a href="{{ url_for('showTreatments', patient_id = patient.id, diagnosis_id = diagnosis.id) }}">{{diagnosis.diagnosis1}}</a>{{diagnosis.diagnosis2}}
-						{{diagnosis.diagnosis3}}
-					</div>
-					<div>
-						<a href="{{ url_for('editDiagnosis', patient_id = patient.id, diagnosis_id = diagnosis.id) }}"><button>Edit</button></a>
-					</div>
-					<div>
-						<a href="{{ url_for('deleteDiagnosis', patient_id = patient.id, diagnosis_id = diagnosis.id) }}"><button>Delete</button></a>
-					</div>
+				<div>
+					<a href="{{ url_for('editPatient', patient_id = patient.id) }}"><button>Edit</button></a>
 				</div>
-				{% endfor %}
-
+				<div>
+					<a href="{{ url_for('deletePatient', patient_id = patient.id) }}"><button>Delete</button></a>
+				</div>
+			</div>
+			<div>
+				<h3>Injury Episodes</h3>
+				<div>
+					<a href="{{ url_for('newDiagnosis', patient_id = patient.id) }}"><button>New Episode</button></a>
+				</div>
+				<div id="list">
+					{% for diagnosis in diagnoses %}
+					<div class="list-item">
+						<div>
+							<a href="{{ url_for('showTreatments', patient_id = patient.id, diagnosis_id = diagnosis.id) }}">{{diagnosis.diagnosis1}}</a><br>
+							{% if diagnosis.diagnosis2 %}
+							Additional coinciding injuries: {{diagnosis.diagnosis2}} 
+							{% endif %}
+							{% if diagnosis.diagnosis3 %}
+							& {{diagnosis.diagnosis3}}<br>
+							{% endif %}
+						</div>
+					</div>
+					{% endfor %}
+				</div>
 			</div>
 		</div>
 	</div>

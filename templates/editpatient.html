@@ -26,9 +26,24 @@
 					<label>Title:</label>
 					<select name="title">
 						<option value="Mr">Mr</option>
+
+						{% if patient.title == "Mrs" %}
+						<option value="Mrs" selected>Mrs</option>
+						{% else %}
 						<option value="Mrs">Mrs</option>
+						{% endif %}
+						
+						{% if patient.title == "Miss" %}
+						<option value="Miss" selected>Miss</option>
+						{% else %}
 						<option value="Miss">Miss</option>
+						{% endif %}
+
+						{% if patient.title == "Ms" %}
+						<option value="Ms" selected>Ms</option>
+						{% else %}
 						<option value="Ms">Ms</option>
+						{% endif %}
 					</select>
 				</div>
 				<div>
@@ -64,7 +79,7 @@
 					<input type="text" name="occupation" value="{{patient.occupation}}">
 				</div>
 				<div>
-					<a href="{{ url_for('showDiagnoses', patient_id = patient.id) }}"><button>Edit</button></a>
+					<button>Edit</button>
 				</div>
 			</form>
 			<div>

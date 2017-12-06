@@ -20,7 +20,7 @@ class Patient(Base):
 	mobile = Column(BigInteger, unique=True, nullable=False)
 	home_ph = Column(BigInteger)
 	work_ph = Column(BigInteger)
-	email = Column(String(120), unique=True)
+	email = Column(String(120))
 	occupation = Column(String(80))
 
 	diagnoses = relationship('Diagnosis', backref='patient', lazy=True)
