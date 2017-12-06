@@ -14,22 +14,22 @@
 			</div>
 		</div>
 		<div id="header">
-			<h1>New Treatment Session</h1>
+			<h1>New Consultation</h1>
 		</div>
 		<div id="main">
 			<div>
 				Patient: {{patient.firstname}} {{patient.lastname}}
 			</div>
 			<div>
-				Diagnosis: {{diagnosis.diagnosis1}}<br>
-				{% if diagnosis.diagnosis2 %}
-				Additional diagnoses: {{diagnosis.diagnosis2}} 
+				Diagnosis: {{episode.diagnosis1}}<br>
+				{% if episode.diagnosis2 %}
+				Additional diagnoses: {{episode.diagnosis2}} 
 				{% endif %}
-				{% if diagnosis.diagnosis3 %}
-				& {{diagnosis.diagnosis3}}<br>
+				{% if episode.diagnosis3 %}
+				& {{episode.diagnosis3}}<br>
 				{% endif %}
 			</div>
-			<form action="{{url_for('newConsult', patient_id = patient.id, diagnosis_id = diagnosis.id)}}" method="post" id="consult-form">
+			<form action="{{url_for('newConsult', patient_id = patient.id, episode_id = episode.id)}}" method="post" id="consult-form">
 				<section>
 					<h2>Subjective</h2>
 					<textarea name="subjective" form="consult-form" maxlength="500"></textarea>
@@ -102,7 +102,7 @@
 				</section>
 			</form>
 			<div>
-				<a href="{{ url_for('episodeInfo', patient_id = patient.id, diagnosis_id = diagnosis.id) }}"><button>Cancel</button></a>
+				<a href="{{ url_for('episodeInfo', patient_id = patient.id, episode_id = episode.id) }}"><button>Cancel</button></a>
 			</div>
 		</div>
 	</div>

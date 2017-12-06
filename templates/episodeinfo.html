@@ -14,60 +14,60 @@
 			</div>
 		</div>
 		<div id="header">
-			<h1>Diagnosis Information</h1>
+			<h1>Episode Details</h1>
 		</div>
 		<div id="main">
 			<div>
 				Patient: {{patient.firstname}} {{patient.lastname}}
 			</div>
 			<div>
-				Diagnosis: {{diagnosis.diagnosis1}}<br>
-				{% if diagnosis.diagnosis2 %}
-				Additional diagnoses: {{diagnosis.diagnosis2}} 
+				Diagnosis: {{episode.diagnosis1}}<br>
+				{% if episode.diagnosis2 %}
+				Additional diagnoses: {{episode.diagnosis2}} 
 				{% endif %}
-				{% if diagnosis.diagnosis3 %}
-				& {{diagnosis.diagnosis3}}<br>
+				{% if episode.diagnosis3 %}
+				& {{episode.diagnosis3}}<br>
 				{% endif %}
 			</div>
 			<div>
 				<a href="{{ url_for('patientInfo', patient_id = patient.id) }}"><button>Back</button></a>
 			</div>
 			<div>
-				<h3>Diagnosis Information</h3>
+				<h3>episode Information</h3>
 				<div>
-					Main Diagnosis: {{diagnosis.diagnosis1}}<br>
-					Other Diagnoses: {{diagnosis.diagnosis2}}<br>
-					                 {{diagnosis.diagnosis3}}<br>
-					Pain Scale: {{diagnosis.pain}}<br>
-					Pain Description: {{diagnosis.pain_description}}<br>
-					Pins & Needles: {{diagnosis.pins_needles}}<br>
-					Numbness: {{diagnosis.numbness}}<br>
-					Current History: {{diagnosis.current_history}}<br>
-					Aggravating Factors: {{diagnosis.aggs}}<br>
-					Easing factors: {{diagnosis.ease}}<br>
-					24 Hr History: {{diagnosis.daily_history}}<br>
-					Past History: {{diagnosis.past_history}}<br>
-					Social History: {{diagnosis.social_history}}<br>
-					Special Questions: {{diagnosis.special_q}}<br>
-					Comments: {{diagnosis.comments}}<br>
+					Main Diagnosis: {{episode.diagnosis1}}<br>
+					Other Diagnoses: {{episode.diagnosis2}}<br>
+					                 {{episode.diagnosis3}}<br>
+					Pain Scale: {{episode.pain}}<br>
+					Pain Description: {{episode.pain_description}}<br>
+					Pins & Needles: {{episode.pins_needles}}<br>
+					Numbness: {{episode.numbness}}<br>
+					Current History: {{episode.current_history}}<br>
+					Aggravating Factors: {{episode.aggs}}<br>
+					Easing factors: {{episode.ease}}<br>
+					24 Hr History: {{episode.daily_history}}<br>
+					Past History: {{episode.past_history}}<br>
+					Social History: {{episode.social_history}}<br>
+					Special Questions: {{episode.special_q}}<br>
+					Comments: {{episode.comments}}<br>
 				</div>
 				<div>
-					<a href="{{ url_for('editEpisode', patient_id = patient.id, diagnosis_id = diagnosis.id) }}"><button>Edit</button></a>
+					<a href="{{ url_for('editEpisode', patient_id = patient.id, episode_id = episode.id) }}"><button>Edit</button></a>
 				</div>
 				<div>
-					<a href="{{ url_for('deleteEpisode', patient_id = patient.id, diagnosis_id = diagnosis.id) }}"><button>Delete</button></a>
+					<a href="{{ url_for('deleteEpisode', patient_id = patient.id, episode_id = episode.id) }}"><button>Delete</button></a>
 				</div>
 			</div>
 			<div>
 				<h3>Consultations & Treatments Provided</h3>
 				<div>
-					<a href="{{ url_for('newConsult', patient_id = patient.id, diagnosis_id = diagnosis.id) }}"><button>New Treatment</button></a>
+					<a href="{{ url_for('newConsult', patient_id = patient.id, episode_id = episode.id) }}"><button>New Treatment</button></a>
 				</div>
 				<div id="list">
 					{% for consult in consults %}
 					<div class="list-item">
 						<div>
-							<a href="{{ url_for('consultInfo', patient_id = patient.id, diagnosis_id = diagnosis.id, treatment_id = consult.id) }}">Consult id: {{consult.id}}</a><br>
+							<a href="{{ url_for('consultInfo', patient_id = patient.id, episode_id = episode.id, consult_id = consult.id) }}">Consult id: {{consult.id}}</a><br>
 						</div>
 					</div>
 					{% endfor %}

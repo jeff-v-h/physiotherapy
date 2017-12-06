@@ -23,10 +23,10 @@ class Patient(Base):
 	email = Column(String(120))
 	occupation = Column(String(80))
 
-	diagnoses = relationship('Diagnosis', backref='patient', lazy=True)
+	episodes = relationship('Episode', backref='patient', lazy=True)
 
-class Diagnosis(Base):
-	__tablename__ = 'diagnosis'
+class Episode(Base):
+	__tablename__ = 'episode'
 
 	id = Column(Integer, primary_key=True)
 	patient_id = Column(Integer, ForeignKey('patient.id'), nullable=False)
@@ -46,21 +46,21 @@ class Diagnosis(Base):
 	special_q = Column(String(250))
 	comments = Column(String(1000))
 
-	body_chart = relationship('BodyChart', backref='diagnosis', lazy=True)
-	consultations = relationship('Consultation', backref='diagnosis', lazy=True)
+	body_chart = relationship('BodyChart', backref='episode', lazy=True)
+	consultations = relationship('Consultation', backref='episode', lazy=True)
 
 class BodyChart(Base):
 	__tablename__ = 'body_chart'
 
 	id = Column(Integer, primary_key=True)
-	diagnosis_id = Column(Integer, ForeignKey('diagnosis.id'), nullable=False)
+	episode_id = Column(Integer, ForeignKey('episode.id'), nullable=False)
 	body_chart = Column(LargeBinary)
 
 class Consultation(Base):
 	__tablename__ = 'consultation'
 
 	id = Column(Integer, primary_key=True)
-	diagnosis_id = Column(Integer, ForeignKey('diagnosis.id'), nullable=False)
+	episode_id = Column(Integer, ForeignKey('episode.id'), nullable=False)
 	initial = Column(Boolean)
 	subjective = Column(String(1000))
 	observation = Column(String(500))
