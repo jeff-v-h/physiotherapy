@@ -1,76 +1,85 @@
 {% extends "layout.html" %}
 {% block head %}
 	{{ super() }}
+	<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='newformstyle.css')}}">
 {% endblock %}
 {% block title %} Edit Patient {% endblock %}
 {% block heading %} Edit Patient Details {% endblock %}
 {% block content %}
+	<div id="basic-info">
+		Patient: {{patient.firstname}} {{patient.lastname}}
+		<div class="btns">
+			<a href="{{ url_for('patientInfo', patient_id = patient.id) }}"><button>Back</button></a>
+		</div>
+	</div>
 	<form action="{{url_for('editPatient', patient_id = patient.id)}}" method="post">
-		<div>
-			<label for="date">Date Started:</label>
-			<input type="date" name="date" id="date" value="{{patient.date_started}}">
-		</div>
-		<div>
-			<label>Title:</label>
-			<select name="title">
-				<option value="Mr">Mr</option>
+		<div id="details">
+			<div>
+				<label for="date">Date Started:</label>
+				<input type="date" name="date" id="date" value="{{patient.date_started}}">
+			</div>
+			<div>
+				<label>Title:</label>
+				<select name="title">
+					<option value="Mr">Mr</option>
 
-				{% if patient.title == "Mrs" %}
-				<option value="Mrs" selected>Mrs</option>
-				{% else %}
-				<option value="Mrs">Mrs</option>
-				{% endif %}
-				
-				{% if patient.title == "Miss" %}
-				<option value="Miss" selected>Miss</option>
-				{% else %}
-				<option value="Miss">Miss</option>
-				{% endif %}
+					{% if patient.title == "Mrs" %}
+					<option value="Mrs" selected>Mrs</option>
+					{% else %}
+					<option value="Mrs">Mrs</option>
+					{% endif %}
+					
+					{% if patient.title == "Miss" %}
+					<option value="Miss" selected>Miss</option>
+					{% else %}
+					<option value="Miss">Miss</option>
+					{% endif %}
 
-				{% if patient.title == "Ms" %}
-				<option value="Ms" selected>Ms</option>
-				{% else %}
-				<option value="Ms">Ms</option>
-				{% endif %}
-			</select>
+					{% if patient.title == "Ms" %}
+					<option value="Ms" selected>Ms</option>
+					{% else %}
+					<option value="Ms">Ms</option>
+					{% endif %}
+				</select>
+			</div>
+			<div>
+				<label for="firstname">First Name:</label>
+				<input type="text" name="firstname" size="30" value="{{patient.firstname}}">
+			</div>
+			<div>
+				<label for="lastname">Last Name:</label>
+				<input type="text" name="lastname" size="30" value="{{patient.lastname}}">
+			</div>
+			<div>
+				<label for="dob">Date of Birth:</label>
+				<input type="date" name="dob" id="dob" value="{{patient.birthdate}}">
+			</div>
+			<div>
+				<label for="mobile">Mobile #:</label>
+				<input type="number" name="mobile" value="{{patient.mobile}}">
+			</div>
+			<div>
+				<label for="home-phone">Home #:</label>
+				<input type="number" name="home-ph" value="{{patient.home_ph}}">
+			</div>
+			<div>
+				<label for="work-phone">Work #:</label>
+				<input type="number" name="work-ph" value="{{patient.work_ph}}">
+			</div>
+			<div>
+				<label for="work-phone">E-mail:</label>
+				<input type="email" name="email" value="{{patient.email}}">
+			</div>
+			<div>
+				<label for="occupation">Occupation:</label>
+				<input type="text" name="occupation" value="{{patient.occupation}}">
+			</div>
 		</div>
 		<div>
-			<label for="firstname">First Name:</label>
-			<input type="text" name="firstname" size="30" value="{{patient.firstname}}">
-		</div>
-		<div>
-			<label for="lastname">Last Name:</label>
-			<input type="text" name="lastname" size="30" value="{{patient.lastname}}">
-		</div>
-		<div>
-			<label for="dob">Date of Birth:</label>
-			<input type="date" name="dob" id="dob" value="{{patient.birthdate}}">
-		</div>
-		<div>
-			<label for="mobile">Mobile #:</label>
-			<input type="number" name="mobile" value="{{patient.mobile}}">
-		</div>
-		<div>
-			<label for="home-phone">Home #:</label>
-			<input type="number" name="home-ph" value="{{patient.home_ph}}">
-		</div>
-		<div>
-			<label for="work-phone">Work #:</label>
-			<input type="number" name="work-ph" value="{{patient.work_ph}}">
-		</div>
-		<div>
-			<label for="work-phone">E-mail:</label>
-			<input type="email" name="email" value="{{patient.email}}">
-		</div>
-		<div>
-			<label for="occupation">Occupation:</label>
-			<input type="text" name="occupation" value="{{patient.occupation}}">
-		</div>
-		<div>
-			<button>Edit</button>
+			<button>Save</button>
 		</div>
 	</form>
-	<div>
+	<div class="btns" style="margin-right:20px">
 		<a href="{{ url_for('patientInfo', patient_id = patient.id) }}"><button>Cancel</button></a>
 	</div>
 {% endblock %}	

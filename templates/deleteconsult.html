@@ -5,20 +5,22 @@
 {% block title %} Delete Consult {% endblock %}
 {% block heading %} Delete Consultation {% endblock %}
 {% block content %}
-	<div>
-		Patient: {{patient.firstname}} {{patient.lastname}}
-	</div>
-	<div>
-		Diagnosis: {{episode.diagnosis1}}<br>
-		{% if episode.diagnosis2 %}
-		Additional diagnoses: {{episode.diagnosis2}} 
-		{% endif %}
-		{% if episode.diagnosis3 %}
-		& {{episode.diagnosis3}}<br>
-		{% endif %}
-	</div>
-	<div>
-		Consult id: {{consult.id}}
+	<div id="basic-info">
+		<div>
+			Patient: {{patient.firstname}} {{patient.lastname}}
+		</div>
+		<div>
+			Diagnosis: {{episode.diagnosis1}}<br>
+			{% if episode.diagnosis2 %}
+			Additional diagnoses: {{episode.diagnosis2}} 
+			{% endif %}
+			{% if episode.diagnosis3 %}
+			& {{episode.diagnosis3}}<br>
+			{% endif %}
+		</div>
+		<div>
+			Consult id: {{consult.id}}
+		</div>
 	</div>
 	<form action="{{url_for('deleteConsult', patient_id = patient.id, episode_id = episode.id, consult_id = consult.id)}}" method="post">
 		<div>
@@ -28,7 +30,7 @@
 			<button>Delete</button>
 		</div>
 	</form>
-	<div>
+	<div class="btns cancel">
 		<a href="{{ url_for('consultInfo', patient_id = patient.id, episode_id = episode.id, consult_id = consult.id) }}"><button>Cancel</button></a>
 	</div>
 {% endblock %}	

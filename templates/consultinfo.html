@@ -5,26 +5,34 @@
 {% block title %} Consult Info {% endblock %}
 {% block heading %} Consultation Details {% endblock %}
 {% block content %}
-	<div>
+	<div id="basic-info">
 		Patient: {{patient.firstname}} {{patient.lastname}}
+		<div class="btns">
+			<a href="{{ url_for('episodeInfo', patient_id = patient.id, episode_id = episode.id) }}"><button>Back</button></a>
+		</div>
+		<div>
+			Diagnosis: {{episode.diagnosis1}}<br>
+			{% if episode.diagnosis2 %}
+			Additional diagnoses: {{episode.diagnosis2}} 
+			{% endif %}
+			{% if episode.diagnosis3 %}
+			& {{episode.diagnosis3}}<br>
+			{% endif %}
+		</div>
+		<div>
+			Consult id: {{consult.id}}
+		</div>
 	</div>
-	<div>
-		Diagnosis: {{episode.diagnosis1}}<br>
-		{% if episode.diagnosis2 %}
-		Additional diagnoses: {{episode.diagnosis2}} 
-		{% endif %}
-		{% if episode.diagnosis3 %}
-		& {{episode.diagnosis3}}<br>
-		{% endif %}
-	</div>
-	<div>
-		Consult id: {{consult.id}}
-	</div>
-	<div>
-		<a href="{{ url_for('episodeInfo', patient_id = patient.id, episode_id = episode.id) }}"><button>Back</button></a>
-	</div>
-	<div>
+	<div id="info">
 		<h3>Consult Information</h3>
+		<div class="btns">
+			<div>
+				<a href="{{ url_for('editConsult', patient_id = patient.id, episode_id = episode.id, consult_id = consult.id) }}"><button>Edit</button></a>
+			</div>
+			<div>
+				<a href="{{ url_for('deleteConsult', patient_id = patient.id, episode_id = episode.id, consult_id = consult.id) }}"><button>Delete</button></a>
+			</div>
+		</div>
 		<div>
 			{% if consult.initial %} 
 			Treatment Type: Initial
@@ -52,12 +60,6 @@
 			Treatments Provided: {{consult.treatments}}<br>
 			Comments: {{consult.comments}}<br>
 			Plan: {{consult.plan}}
-		</div>
-		<div>
-			<a href="{{ url_for('editConsult', patient_id = patient.id, episode_id = episode.id, consult_id = consult.id) }}"><button>Edit</button></a>
-		</div>
-		<div>
-			<a href="{{ url_for('deleteConsult', patient_id = patient.id, episode_id = episode.id, consult_id = consult.id) }}"><button>Delete</button></a>
 		</div>
 	</div>
 {% endblock %}

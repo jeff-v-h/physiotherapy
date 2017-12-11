@@ -1,38 +1,51 @@
 {% extends "layout.html" %}
 {% block head %}
 	{{ super() }}
+	<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='newformstyle.css')}}">
 {% endblock %}
 {% block title %} Edit Episode {% endblock %}
 {% block heading %} Edit Episode {% endblock %}
 {% block content %}
-	<div>
+	<div id="basic-info">
+		<div class="btns">
+			<a href="{{ url_for('episodeInfo', patient_id = patient.id, episode_id = episode.id) }}"><button>Back</button></a>
+		</div>
 		Patient: {{patient.firstname}} {{patient.lastname}}
-	</div>
-	<div>
-		<a href="{{ url_for('episodeInfo', patient_id = patient.id, episode_id = episode.id) }}"><button>Back</button></a>
+		<div>
+			Diagnosis: {{episode.diagnosis1}}<br>
+			{% if episode.diagnosis2 %}
+			Additional diagnoses: {{episode.diagnosis2}} 
+			{% endif %}
+			{% if episode.diagnosis3 %}
+			& {{episode.diagnosis3}}<br>
+			{% endif %}
+		</div>
 	</div>
 	<form action="{{url_for('editEpisode', patient_id = patient.id, episode_id = episode.id)}}" method="post" id="edit-episode-form">
-		<div id="vas" style="display: block">
+		<h2>Subjective Assessment</h2>
+		<div>
 			<h4>Pain Presentation</h4>
 			<label for="pain">Pain Scale:</label>
 			<input type="number" name="pain" min="0" max="10" id="pain" value="{{episode.pain}}">
 			<p>Pain description:</p>
-			<textarea name="pain-description" form="edit-episode-form" maxlength="500">{{episode.pain_description}}</textarea>
+			<div id="pain-description">
+				<textarea name="pain-description" form="edit-episode-form" maxlength="500">{{episode.pain_description}}</textarea>
+				<div id="paraesthesia">
+					<label for="pins-needles">Pins & needles</label>
+					{% if episode.pins_needles %}
+					<input type="checkbox" name="pins-needles" id="pins-needles" checked><br>
+					{% else %}
+					<input type="checkbox" name="pins-needles" id="pins-needles"><br>
+					{% endif %}
 
-			<label for="pins-needles">Pins & needles</label>
-			{% if episode.pins_needles %}
-			<input type="checkbox" name="pins-needles" id="pins-needles" checked><br>
-			{% else %}
-			<input type="checkbox" name="pins-needles" id="pins-needles"><br>
-			{% endif %}
-
-			<label for="numbness">Numbness</label>
-			{% if episode.numbness %}
-			<input type="checkbox" name="numbness" id="numbness" checked>
-			{% else %}
-			<input type="checkbox" name="numbness" id="numbness">
-			{% endif %}
-
+					<label for="numbness">Numbness</label>
+					{% if episode.numbness %}
+					<input type="checkbox" name="numbness" id="numbness" checked>
+					{% else %}
+					<input type="checkbox" name="numbness" id="numbness">
+					{% endif %}
+				</div>
+			</div>
 		</div>
 		<div class="flex-container">
 			<div>
@@ -78,7 +91,7 @@
 			<button>Edit</button>
 		</div>
 	</form>
-	<div>
+	<div class="btns cancel">
 		<a href="{{ url_for('episodeInfo', patient_id = patient.id, episode_id = episode.id) }}"><button>Cancel</button></a>
 	</div>		
 {% endblock %}

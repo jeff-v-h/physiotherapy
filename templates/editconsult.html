@@ -1,27 +1,28 @@
 {% extends "layout.html" %}
 {% block head %}
 	{{ super() }}
+	<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='newformstyle.css')}}">
 {% endblock %}
 {% block title %} Edit Consult {% endblock %}
 {% block heading %} Edit Consultation {% endblock %}
 {% block content %}
-	<div>
+	<div id="basic-info">
+		<div class="btns">
+			<a href="{{ url_for('consultInfo', patient_id = patient.id, episode_id = episode.id, consult_id = consult.id) }}"><button>Back</button></a>
+		</div>
 		Patient: {{patient.firstname}} {{patient.lastname}}
-	</div>
-	<div>
-		Diagnosis: {{episode.diagnosis1}}<br>
-		{% if episode.diagnosis2 %}
-		Additional diagnoses: {{episode.diagnosis2}} 
-		{% endif %}
-		{% if episode.diagnosis3 %}
-		& {{episode.diagnosis3}}<br>
-		{% endif %}
-	</div>
-	<div>
-		Consult id: {{consult.id}}
-	</div>
-	<div>
-		<a href="{{ url_for('consultInfo', patient_id = patient.id, episode_id = episode.id, consult_id = consult.id) }}"><button>Back</button></a>
+		<div>
+			Diagnosis: {{episode.diagnosis1}}<br>
+			{% if episode.diagnosis2 %}
+			Additional diagnoses: {{episode.diagnosis2}} 
+			{% endif %}
+			{% if episode.diagnosis3 %}
+			& {{episode.diagnosis3}}<br>
+			{% endif %}
+		</div>
+		<div>
+			Consult id: {{consult.id}}
+		</div>
 	</div>
 	<form action="{{url_for('editConsult', patient_id = patient.id, episode_id = episode.id, consult_id = consult.id)}}" method="post" id="edit-consult-form">
 		<section>
@@ -82,24 +83,25 @@
 			</div>
 		</section>
 		<section>
-			<div id="treatments">
-				<h2>Treatments Provided</h2>
-				<textarea name="treatments" form="edit-consult-form" maxlength="1000">{{consult.treatments}}</textarea>
+			<h2>Treatment</h2>
+			<div class="flex-container" id="treatments">
+				<div>
+					<h4>Treatments Provided</h4>
+					<textarea name="treatments" form="edit-consult-form" maxlength="1000">{{consult.treatments}}</textarea>
+				</div>
+				<div id="additional">
+					<h4>Additional Comments</h4>
+					<textarea name="treatment-comments" form="edit-consult-form" maxlength="1000">{{consult.comments}}</textarea>
+				</div>
 			</div>
-			<div id="additional">
-				<h4>Additional Comments</h4>
-				<textarea name="treatment-comments" form="edit-consult-form" maxlength="1000">{{consult.comments}}</textarea>
-			</div>
-			<div id="plan">
-				<h4>Plan</h4>
-				<textarea name="plan" form="edit-consult-form" maxlength="500">{{consult.plan}}</textarea>
-			</div>
+			<h2>Plan</h2>
+			<textarea name="plan" form="edit-consult-form" maxlength="500">{{consult.plan}}</textarea>
 		</section>
 		<div>
 			<button>Edit</button>
 		</div>
 	</form>
-	<div>
+	<div class="btns cancel">
 		<a href="{{ url_for('consultInfo', patient_id = patient.id, episode_id = episode.id, consult_id = consult.id) }}"><button>Cancel</button></a>
 	</div>
 {% endblock %}

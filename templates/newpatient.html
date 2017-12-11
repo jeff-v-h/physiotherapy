@@ -1,7 +1,7 @@
 {% extends "layout.html" %}
 {% block head %}
 	{{ super() }}
-<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='newformstyle.css')}}">
+	<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='newformstyle.css')}}">
 {% endblock %}
 {% block title %} New Patient {% endblock %}
 {% block heading %} New Patient {% endblock %}
@@ -58,7 +58,9 @@
 				<input type="submit" value="Create" id="btn-submit">
 			</div>
 		</form>
-		<a href="{{ url_for('patientList') }}"><button>Cancel</button></a>
+		<div class="btns cancel">
+			<a href="{{ url_for('patientList') }}"><button>Cancel</button></a>
+		</div>
 	</section>
 {% endblock %}
 

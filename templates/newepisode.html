@@ -6,9 +6,9 @@
 {% block title %} New Episode {% endblock %}
 {% block heading %} New Episode {% endblock %}
 {% block content %}
-	<div>	
+	<div id="basic-info">
 		Patient: {{patient.firstname}} {{patient.lastname}}
-		<div id="top-buttons">
+		<div class="btns">
 			<a href="{{ url_for('patientInfo', patient_id = patient.id) }}"><button>Back</button></a>
 		</div>
 	</div>
@@ -28,17 +28,21 @@
 					<button type="button" id="btn-clear" onclick="clearCanvas()">Clear</button>
 				</div>
 			</div>
-			<div id="vas" style="display: block">
+			<div id="vas">
 				<h4>Pain Presentation</h4>
 				<p>What is your pain on a scale of 1 to 10? (0 is no pain, 10 is extreme pain)</p>
 				<label for="pain">Pain Scale:</label>
 				<input type="number" name="pain" min="0" max="10" id="pain">
 				<p>Pain description:</p>
-				<textarea name="pain-description" form="episode-form" maxlength="500"></textarea>
-				<label for="pins-needles">Pins & needles</label>
-				<input type="checkbox" name="pins-needles" id="pins-needles"><br>
-				<label for="numbness">Numbness</label>
-				<input type="checkbox" name="numbness" id="numbness">
+				<div id="pain-description">
+					<textarea name="pain-description" form="episode-form" maxlength="500"></textarea>
+					<div id="paraesthesia">
+						<label for="pins-needles">Pins & needles</label>
+						<input type="checkbox" name="pins-needles" id="pins-needles"><br>
+						<label for="numbness">Numbness</label>
+						<input type="checkbox" name="numbness" id="numbness">
+					</div>
+				</div>
 			</div>
 			<div class="flex-container">
 				<div>
@@ -132,17 +136,24 @@
 		</section>
 		<section>
 			<h2>Treatment</h2>
-			<textarea name="treatments" form="episode-form" maxlength="1000"></textarea>
-			<h4>Comments</h4>
-			<textarea name="treatment-comments" form="episode-form" maxlength="1000"></textarea>
-			<h4>Plan</h4>
+			<div class="flex-container" id="treatments">
+				<div>
+					<h4>Treatments Provided</h4>
+					<textarea name="treatments" form="episode-form" maxlength="1000"></textarea>
+				</div>
+				<div id="additional">
+					<h4>Comments</h4>
+					<textarea name="treatment-comments" form="episode-form" maxlength="1000"></textarea>
+				</div>				
+			</div>
+			<h2>Plan</h2>
 			<textarea name="plan" form="episode-form" maxlength="500"></textarea>
 		</section>
 		<div>
 			<button>Create</button>
 		</div>
 	</form>
-	<div>
+	<div class="btns cancel">
 		<a href="{{ url_for('patientInfo', patient_id = patient.id) }}"><button>Cancel</button></a>
 	</div>
 {% endblock %}

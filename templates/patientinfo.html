@@ -5,14 +5,22 @@
 {% block title %} Patient File {% endblock %}
 {% block heading %} Patient File {% endblock %}
 {% block content %}
-	<div>
+	<div id="basic-info">
 		Patient: {{patient.firstname}} {{patient.lastname}}
+		<div class="btns">
+			<a href="{{ url_for('patientList') }}"><button>Back</button></a>
+		</div>
 	</div>
-	<div>
-		<a href="{{ url_for('patientList') }}"><button>Back</button></a>
-	</div>
-	<div>
+	<div id="info">
 		<h3>Patient Information</h3>
+		<div class="btns">
+			<div>
+				<a href="{{ url_for('editPatient', patient_id = patient.id) }}"><button>Edit</button></a>
+			</div>
+			<div>
+				<a href="{{ url_for('deletePatient', patient_id = patient.id) }}"><button>Delete</button></a>
+			</div>
+		</div>
 		<div>
 			Date Started: {{patient.date_started}}<br>
 			Title: {{patient.title}}<br>
@@ -25,31 +33,29 @@
 			E-mail: {{patient.email}}<br>
 			Occupation: {{patient.occupation}}<br>
 		</div>
-		<div>
-			<a href="{{ url_for('editPatient', patient_id = patient.id) }}"><button>Edit</button></a>
-		</div>
-		<div>
-			<a href="{{ url_for('deletePatient', patient_id = patient.id) }}"><button>Delete</button></a>
-		</div>
 	</div>
-	<div>
-		<h3>Injury Episodes</h3>
-		<div>
+	<div id="list-container">
+		<div class="btns">
 			<a href="{{ url_for('newEpisode', patient_id = patient.id) }}"><button>New Episode</button></a>
 		</div>
+		<h3>Injury Episodes</h3>
 		<div id="list">
 			{% for episode in episodes %}
-			<div class="list-item">
-				<div>
-					<a href="{{ url_for('episodeInfo', patient_id = patient.id, episode_id = episode.id) }}">{{episode.diagnosis1}}</a><br>
-					{% if episode.diagnosis2 %}
-					Additional coinciding injuries: {{episode.diagnosis2}} 
-					{% endif %}
-					{% if episode.diagnosis3 %}
-					& {{episode.diagnosis3}}<br>
-					{% endif %}
+			<a href="{{ url_for('episodeInfo', patient_id = patient.id, episode_id = episode.id) }}">
+				<div class="list-item">
+					<div>
+						{{episode.diagnosis1}}<br>
+					</div>
+					<div>
+						{% if episode.diagnosis2 %}
+						Additional coinciding injuries: {{episode.diagnosis2}} 
+						{% endif %}
+						{% if episode.diagnosis3 %}
+						& {{episode.diagnosis3}}<br>
+						{% endif %}
+					</div>
 				</div>
-			</div>
+			</a>
 			{% endfor %}
 		</div>
 	</div>

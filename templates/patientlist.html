@@ -10,11 +10,10 @@
 	</div>
 	<div id="list">
 		{% for patient in patients %}
+		<a href="{{ url_for('patientInfo', patient_id = patient.id) }}">
 		<div class="list-item">
-			<div>
-				<a href="{{ url_for('patientInfo', patient_id = patient.id) }}">{{patient.firstname}} {{patient.lastname}}</a> with id: {{patient.id}}
-			</div>
-		</div>
+				{{patient.firstname}} {{patient.lastname}}
+		</div></a>
 		{% endfor %}
 	</div>
 {% endblock %}

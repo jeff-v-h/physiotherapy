@@ -1,5 +1,5 @@
 /*
- * WRAPPERS
+ * WRAPPERS/GENERAL
  */
 html, body{
 	padding: 0;
@@ -19,8 +19,14 @@ a {
 	text-decoration: none;
 }
 
+h3 {
+	font-size: 1.5em;
+	margin: 10px 0;
+}
+
+
 /*
- * TOPBAR
+ * TOPBAR (Above header)
  */
 #topbar {
 	background-color: #209AEE;
@@ -34,6 +40,11 @@ a {
 	vertical-align: middle;
 }
 
+#home { 
+	width: 800px;
+	margin: 0 auto;
+	padding: 0 20px;
+}
 
 /*
  * HEADER
@@ -54,10 +65,59 @@ a {
 }
 
 #content {
-	padding: 10px 10px 100px; 
+	padding: 0px 10px 150px; 
 	/* bottom padding more than height of footer to keep to bottom of page for short pages */
 	max-width: 800px;
 	margin: auto;
+
+}
+
+#basic-info {
+	border: black solid 5px;
+	background-color: #CCD1D1;
+	padding: 10px 20px;
+}
+
+#info {
+	border: black solid 5px;
+	background-color: #CCD1D1;
+	padding: 0 20px 20px;
+}
+
+#list-container h3 {
+	margin: 20px;
+}
+
+#list-container button {
+	margin-top: 10px;
+	margin-right: 20px;
+}
+
+.btns {
+	float: right;
+}
+
+.btns > div {
+	float: left;
+}
+
+.list-item {
+	border: black 5px solid;
+	background-color: #D5EEFA;
+	font-size: large;
+	padding: 0 20px;
+	height: 60px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-around;
+}
+
+form {
+	padding: 20px;
+}
+
+.cancel {
+	display: block;
 }
 
 
